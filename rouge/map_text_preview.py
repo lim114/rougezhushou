@@ -135,7 +135,7 @@ def preview(image, reader, known_config=None):
         if label in accepted and row['confidence'] >= .9:
             nodes.append({'type': label, 'box': row['box'], 'confidence': row['confidence'],
                           'hidden': label.startswith('未知'), 'prediction': None})
-    graph = read_map(image, texts, nodes, {'config': config})
+    graph = read_map(image, texts, nodes, {'config': config}, use_label_rows=True)
     if (graph['status'] != 'matched' or not graph['current_node']
             or not all(node['visible'] and node['observed_type'] for node in graph['nodes'])):
         return None

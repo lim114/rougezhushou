@@ -1,0 +1,370 @@
+{
+  "title": "地图预读按已读节点所在行查找空地圆环",
+  "baseline_commit": "a10604464",
+  "target_ms": 500,
+  "acceptance_complete": false,
+  "scope": "核显地图预读。常规整页仍用原范围查找圆环。",
+  "failure": "录像的第16帧包含八个可读节点标签和正确位置文字。额外的画面圆形元素落在节点行之外，却与最外列形成另一组同样可信的列距，导致预读拒绝完整地图。",
+  "method": "仅在当前标签足以确认所有行时，逐行在有边距的条带内寻找候选圆环，圆心还须位于对应行，并保留环内外色差、模板唯一、当前位置和全部节点可见的判据。标签不足时回到原搜索范围。",
+  "corpus": {
+    "input_variants": 112,
+    "reached_geometry": 47,
+    "readers": {
+      "old": {
+        "confirmed": 41,
+        "geometry_warm_median_ms": 63.89
+      },
+      "new": {
+        "confirmed": 43,
+        "geometry_warm_median_ms": 50.16
+      }
+    },
+    "previously_confirmed_changed": 0,
+    "additional_correct": 2,
+    "withheld_incomplete": 2,
+    "scope": "50个录像时间点、20张窗口图、24个相邻转场帧、18个客户区裁切。录像重复帧和裁切变体并非独立对局。"
+  },
+  "window_method": "先稳定干员页。从游戏回放源窗口实际出现变化的帧，到助手窗口首次绘出完整正确地图及位置。原校正方式在相同回放和同一台预热核显上重复。正式对照两种场景交替前后，均核对后续窗口及私人记录。",
+  "groups": {
+    "animrowbefore": {
+      "medians_ms": {
+        "onset_ms": 1361.84,
+        "clear_ms": 1163.68,
+        "capture_after_onset_ms": 387.21,
+        "queue_ms": 30.08,
+        "read_to_graph_ms": 854.4,
+        "graph_to_window_ms": 91.3
+      },
+      "under_500": 0,
+      "preview_first": 1,
+      "runs": [
+        {
+          "onset_ms": 1472.06,
+          "clear_ms": 1267.32,
+          "capture_after_onset_ms": 406.01,
+          "queue_ms": 30.08,
+          "read_to_graph_ms": 944.68,
+          "graph_to_window_ms": 91.3,
+          "preview_first": false,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        },
+        {
+          "onset_ms": 1361.84,
+          "clear_ms": 1163.68,
+          "capture_after_onset_ms": 387.21,
+          "queue_ms": 30.02,
+          "read_to_graph_ms": 854.4,
+          "graph_to_window_ms": 90.2,
+          "preview_first": false,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        },
+        {
+          "onset_ms": 715.65,
+          "clear_ms": 510.33,
+          "capture_after_onset_ms": 355.47,
+          "queue_ms": 50.12,
+          "read_to_graph_ms": 204.94,
+          "graph_to_window_ms": 105.1,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        }
+      ]
+    },
+    "animrowafter": {
+      "medians_ms": {
+        "onset_ms": 715.21,
+        "clear_ms": 512.99,
+        "capture_after_onset_ms": 369.43,
+        "queue_ms": 57.56,
+        "read_to_graph_ms": 199.86,
+        "graph_to_window_ms": 109.1
+      },
+      "under_500": 0,
+      "preview_first": 3,
+      "runs": [
+        {
+          "onset_ms": 715.15,
+          "clear_ms": 512.99,
+          "capture_after_onset_ms": 369.43,
+          "queue_ms": 33.54,
+          "read_to_graph_ms": 199.86,
+          "graph_to_window_ms": 112.3,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        },
+        {
+          "onset_ms": 715.21,
+          "clear_ms": 512.33,
+          "capture_after_onset_ms": 354.78,
+          "queue_ms": 57.56,
+          "read_to_graph_ms": 193.81,
+          "graph_to_window_ms": 109.1,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        },
+        {
+          "onset_ms": 821.83,
+          "clear_ms": 619.12,
+          "capture_after_onset_ms": 388.44,
+          "queue_ms": 57.97,
+          "read_to_graph_ms": 274.81,
+          "graph_to_window_ms": 100.6,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        }
+      ]
+    },
+    "layoutrowbefore": {
+      "medians_ms": {
+        "onset_ms": 645.88,
+        "clear_ms": 645.88,
+        "capture_after_onset_ms": 162.3,
+        "queue_ms": 36.82,
+        "read_to_graph_ms": 320.48,
+        "graph_to_window_ms": 114.6
+      },
+      "under_500": 0,
+      "preview_first": 3,
+      "runs": [
+        {
+          "onset_ms": 659.26,
+          "clear_ms": 659.26,
+          "capture_after_onset_ms": 145.25,
+          "queue_ms": 19.55,
+          "read_to_graph_ms": 391.47,
+          "graph_to_window_ms": 103.0,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        },
+        {
+          "onset_ms": 588.15,
+          "clear_ms": 588.15,
+          "capture_after_onset_ms": 162.3,
+          "queue_ms": 36.82,
+          "read_to_graph_ms": 273.74,
+          "graph_to_window_ms": 115.3,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        },
+        {
+          "onset_ms": 645.88,
+          "clear_ms": 645.88,
+          "capture_after_onset_ms": 162.35,
+          "queue_ms": 48.48,
+          "read_to_graph_ms": 320.48,
+          "graph_to_window_ms": 114.6,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        }
+      ]
+    },
+    "layoutrowafter": {
+      "medians_ms": {
+        "onset_ms": 640.87,
+        "clear_ms": 640.87,
+        "capture_after_onset_ms": 141.3,
+        "queue_ms": 35.08,
+        "read_to_graph_ms": 366.69,
+        "graph_to_window_ms": 103.6
+      },
+      "under_500": 0,
+      "preview_first": 3,
+      "runs": [
+        {
+          "onset_ms": 696.76,
+          "clear_ms": 696.76,
+          "capture_after_onset_ms": 173.69,
+          "queue_ms": 17.41,
+          "read_to_graph_ms": 402.06,
+          "graph_to_window_ms": 103.6,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        },
+        {
+          "onset_ms": 640.87,
+          "clear_ms": 640.87,
+          "capture_after_onset_ms": 141.3,
+          "queue_ms": 35.08,
+          "read_to_graph_ms": 366.69,
+          "graph_to_window_ms": 97.8,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        },
+        {
+          "onset_ms": 637.84,
+          "clear_ms": 637.84,
+          "capture_after_onset_ms": 134.0,
+          "queue_ms": 53.77,
+          "read_to_graph_ms": 342.67,
+          "graph_to_window_ms": 107.4,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        }
+      ]
+    },
+    "prodlabel": {
+      "medians_ms": {
+        "onset_ms": 717.47,
+        "clear_ms": 516.41,
+        "capture_after_onset_ms": 373.52,
+        "queue_ms": 61.83,
+        "read_to_graph_ms": 172.13,
+        "graph_to_window_ms": 103.8
+      },
+      "under_500": 0,
+      "preview_first": 3,
+      "runs": [
+        {
+          "onset_ms": 709.88,
+          "clear_ms": 507.59,
+          "capture_after_onset_ms": 366.37,
+          "queue_ms": 52.06,
+          "read_to_graph_ms": 172.13,
+          "graph_to_window_ms": 119.3,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        },
+        {
+          "onset_ms": 736.62,
+          "clear_ms": 532.24,
+          "capture_after_onset_ms": 373.52,
+          "queue_ms": 69.06,
+          "read_to_graph_ms": 191.35,
+          "graph_to_window_ms": 102.7,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        },
+        {
+          "onset_ms": 717.47,
+          "clear_ms": 516.41,
+          "capture_after_onset_ms": 385.65,
+          "queue_ms": 61.83,
+          "read_to_graph_ms": 166.2,
+          "graph_to_window_ms": 103.8,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        }
+      ]
+    },
+    "freshbands": {
+      "medians_ms": {
+        "onset_ms": 606.79,
+        "clear_ms": 404.06,
+        "capture_after_onset_ms": 262.37,
+        "queue_ms": 22.04,
+        "read_to_graph_ms": 210.14,
+        "graph_to_window_ms": 116.2
+      },
+      "under_500": 0,
+      "preview_first": 3,
+      "runs": [
+        {
+          "onset_ms": 601.26,
+          "clear_ms": 399.13,
+          "capture_after_onset_ms": 268.39,
+          "queue_ms": 14.3,
+          "read_to_graph_ms": 202.41,
+          "graph_to_window_ms": 116.2,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        },
+        {
+          "onset_ms": 660.22,
+          "clear_ms": 458.43,
+          "capture_after_onset_ms": 262.37,
+          "queue_ms": 37.07,
+          "read_to_graph_ms": 245.25,
+          "graph_to_window_ms": 115.5,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        },
+        {
+          "onset_ms": 606.79,
+          "clear_ms": 404.06,
+          "capture_after_onset_ms": 255.58,
+          "queue_ms": 22.04,
+          "read_to_graph_ms": 210.14,
+          "graph_to_window_ms": 119.0,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        }
+      ]
+    },
+    "rollbound": {
+      "medians_ms": {
+        "onset_ms": 1395.34,
+        "clear_ms": 1191.61,
+        "capture_after_onset_ms": 363.77,
+        "queue_ms": 54.93,
+        "read_to_graph_ms": 881.09,
+        "graph_to_window_ms": 102.5
+      },
+      "under_500": 0,
+      "preview_first": 1,
+      "runs": [
+        {
+          "onset_ms": 745.29,
+          "clear_ms": 543.36,
+          "capture_after_onset_ms": 344.78,
+          "queue_ms": 95.68,
+          "read_to_graph_ms": 186.02,
+          "graph_to_window_ms": 118.8,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        },
+        {
+          "onset_ms": 1395.34,
+          "clear_ms": 1191.61,
+          "capture_after_onset_ms": 363.77,
+          "queue_ms": 54.93,
+          "read_to_graph_ms": 881.09,
+          "graph_to_window_ms": 95.5,
+          "preview_first": false,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        },
+        {
+          "onset_ms": 1581.23,
+          "clear_ms": 1364.18,
+          "capture_after_onset_ms": 395.84,
+          "queue_ms": 46.13,
+          "read_to_graph_ms": 1036.75,
+          "graph_to_window_ms": 102.5,
+          "preview_first": false,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        }
+      ]
+    }
+  },
+  "scheduler_experiments": "prodlabel 保持产品调度。freshbands 仅在隔离夹具中令预读空闲时读取最新采集，并直接发布；rollbound 仅在有对应同帧整页任务时发布。三组各三轮。两种调度试验均未应用到玩家窗口。",
+  "validation": {
+    "tests": 83,
+    "native_window_updated": true,
+    "private_hashes_unchanged": true
+  },
+  "limitations": [
+    "实机回放两种同区域布局，未进行真人切页。",
+    "同帧正确结果、读完后的稳定显示和采集时间分别核验；不能把清晰帧起算成绩当成切页时间。",
+    "常规CPU和藏品的端到端耗时未在本批重测。"
+  ]
+}

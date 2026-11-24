@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 from threading import Event
 from time import monotonic, sleep
 
@@ -7,6 +7,52 @@ import cv2
 import numpy as np
 
 from rouge.map_text_preview import CurrentMapPreview, detached_marker
+from rouge.map_recognition import _label_point, _label_rows, _ring_candidates, read_map
+
+
+class MapPreviewRowTests(unittest.TestCase):
+    def test_row_search_uses_all_rows_and_the_exit_label_offset(self):
+        points = []
+        for top, name in [(.226, '作战'), (.526, '作战'), (.85, '险路尽头')]:
+            box = [[.2, top], [.3, top], [.3, top+.02], [.2, top+.02]]
+            points.append(_label_point({'type': name, 'confidence': .99, 'box': box}))
+        rows, pitch = _label_rows(points, 3)
+        np.testing.assert_allclose(rows, [.2, .5, .8])
+        self.assertAlmostEqual(pitch, .3)
+        self.assertIsNone(_label_rows(points[:2], 3))
+
+    def test_padding_gives_the_detector_context_but_cannot_supply_an_off_row_circle(self):
+        gray = np.zeros((200, 250), np.uint8)
+        circles = np.array([[[46, 3, 6], [84, 21, 6]]], dtype=np.float32)
+        with patch.object(cv2, 'HoughCircles', return_value=circles) as detect:
+            result = list(_ring_candidates(gray, 12, [(50, 90, 70, 6)]))
+        self.assertEqual(detect.call_args.args[0].shape, (40, 250))
+        self.assertEqual(result, [(84, 71, 6)])
+
+    def test_circle_beyond_last_column_does_not_obscure_a_complete_set_of_labeled_rows(self):
+        height, width = 1080, 1920
+        image = np.full((height, width, 3), 180, np.uint8)
+        layout = [
+            ['', '未知的诡秘', None, '未知的凶戾', '未知的诡秘'],
+            [None, '作战', None, '未知的诡秘', ''],
+            ['', None, '未知的凶戾', '未知的诡秘', '险路尽头'],
+        ]
+        labels = []
+        for row, cells in enumerate(layout):
+            for col, name in enumerate(cells):
+                x, y = .2 + .15*col, .24 + .24*row
+                if name is None:
+                    cv2.circle(image, (round(x*width), round(y*height)), 13, (28, 28, 28), 4, cv2.LINE_AA)
+                elif name:
+                    top = y + (.05 if name == '险路尽头' else .026)
+                    box = [[x-.03, top], [x+.03, top], [x+.03, top+.02], [x-.03, top+.02]]
+                    labels.append({'type': name, 'confidence': 1., 'box': box})
+        cv2.circle(image, (1824, 205), 13, (28, 28, 28), 4, cv2.LINE_AA)
+        graph = read_map(image, [], labels, {'config': {'zone': {'id': 'zone_1'}}}, use_label_rows=True)
+        self.assertEqual(graph['template_id'], '1b')
+        observed = {node['id']: node['observed_type'] for node in graph['nodes']}
+        self.assertEqual(observed['1,0'], '林间空地')
+        self.assertEqual(observed['2,4'], '险路尽头')
 
 
 class MapPreviewMarkerTests(unittest.TestCase):

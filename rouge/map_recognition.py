@@ -144,7 +144,44 @@ def _axis(values, count):
     return origin,pitch
 
 
-def _rings(image, labels):
+def _label_point(label):
+    box = label['box']
+    xs, ys = zip(*box)
+    # The exit title sits farther below its icon than ordinary node labels.
+    gap = 3 if label['type'] == '险路尽头' else 1.8
+    y = float(np.mean(ys)) - (max(ys) - min(ys)) * gap
+    return {'center': [float(np.mean(xs)), y], 'type': label['type'], 'source': '可见节点标签',
+            'confidence': label['confidence'], 'label_box': box}
+
+
+def _label_rows(points, count):
+    """Locate every map row from visible labels alone, in normalized coordinates."""
+    centers = [point['center'][1] for point in points]
+    axis = _axis(centers, count)
+    if axis is None:
+        return None
+    origin, pitch = axis
+    rows = [origin + i * pitch for i in range(count)]
+    if any(min(abs(center - row) for row in rows) > pitch * .12 for center in centers):
+        return None
+    return rows, pitch
+
+
+def _ring_candidates(gray, font, bands):
+    """Search padded strips, keeping circle centers within the verified row."""
+    for start, end, center, half_width in bands:
+        if start >= end:
+            continue
+        circles = cv2.HoughCircles(gray[start:end], cv2.HOUGH_GRADIENT, 1.2, max(10, font*1.3),
+            param1=80, param2=26, minRadius=max(4, round(font*.25)), maxRadius=max(9, round(font*.85)))
+        if circles is not None:
+            for x, y, radius in circles[0]:
+                y = float(y) + start
+                if center is None or abs(y - center) <= half_width:
+                    yield x, y, radius
+
+
+def _rings(image, labels, row_grid=None):
     h,w=image.shape[:2]
     if not labels:return []
     font=float(np.median([(max(p[1] for p in n['box'])-min(p[1] for p in n['box']))*h for n in labels]))
@@ -159,10 +196,15 @@ def _rings(image, labels):
     small=cv2.resize(content,None,fx=scale,fy=scale) if scale<1 else content
     sh,sw=small.shape[:2];gray=cv2.cvtColor(small,cv2.COLOR_BGR2GRAY)
     local_font=font*scale
-    circles=cv2.HoughCircles(gray,cv2.HOUGH_GRADIENT,1.2,max(10,local_font*1.3),
-        param1=80,param2=26,minRadius=max(4,round(local_font*.25)),maxRadius=max(9,round(local_font*.85)))
+    bands = [(0, sh, None, 0)]
+    if row_grid is not None:
+        rows, pitch = row_grid
+        half_width = pitch*h*scale*.14
+        extent = half_width + local_font*1.6
+        centers_y = [(row*h - y0)*scale for row in rows]
+        bands = [(max(0, int(y-extent)), min(sh, round(y+extent)), y, half_width) for y in centers_y]
     points = []
-    for x, y, radius in (() if circles is None else circles[0]):
+    for x, y, radius in _ring_candidates(gray, local_font, bands):
         x, y, r = round(float(x)), round(float(y)), round(float(radius))
         k = round(r*1.5)
         if not (k <= x < sw-k and k <= y < sh-k): continue
@@ -229,7 +271,7 @@ def _visible_clearing_at(image, center, font_height):
     return False
 
 
-def read_map(image, texts, labels, run):
+def read_map(image, texts, labels, run, *, use_label_rows=False):
     config = (run or {}).get('config', {})
     zid = config.get('zone', {}).get('id')
     data = map_data()
@@ -244,7 +286,10 @@ def read_map(image, texts, labels, run):
         base['reason'] = '本帧区域未确认，或特殊区域/第六层尚无模板。'
         return base
     labels=[n for n in labels if not n.get('detail_panel_label')]
-    points = _rings(image,labels)
+    rows, cols = templates[0]['rows'], templates[0]['cols']
+    label_points = [_label_point(label) for label in labels]
+    row_grid = _label_rows(label_points, rows) if use_label_rows else None
+    points = _rings(image, labels, row_grid)
     if points:
         text_bounds = []
         for text in texts:
@@ -254,14 +299,7 @@ def read_map(image, texts, labels, run):
         points = [p for p in points if not any(
             left <= p['center'][0] <= right and top <= p['center'][1] <= bottom
             for left, right, top, bottom in text_bounds)]
-    for label in labels:
-        box = label['box']; x = float(np.mean([p[0] for p in box])); y = float(np.mean([p[1] for p in box]))
-        height = max(p[1] for p in box)-min(p[1] for p in box)
-        # Text labels sit below the icon; the exit title has a larger gap.
-        y -= height * (3 if label['type']=='险路尽头' else 1.8)
-        points.append({'center': [x, y], 'type': label['type'], 'source': '可见节点标签',
-                       'confidence': label['confidence'], 'label_box': box})
-    rows, cols = templates[0]['rows'], templates[0]['cols']
+    points.extend(label_points)
     axes = (_axis([p['center'][0] for p in points], cols), _axis([p['center'][1] for p in points], rows))
     if any(axis is None for axis in axes):
         base['status'] = 'insufficient'; base['reason'] = '无法从当前画面确认完整网格尺度。'

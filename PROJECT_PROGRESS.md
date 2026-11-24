@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-核显地图预读对清晰切换已有收益。带动画的选帧与整页识别、常规 CPU 及藏品页正确首显仍需优化和核验，目标为500毫秒以内；真人实测暂缓。[回执](verification/maintenance/gpu-map-preview-20261124/summary.json)。
+核显地图已减少跨行圆环误检。正式调度下，转场到第一张成功帧的等待、正确结果首绘及藏品完整首显仍需优化。先读最新帧与整页选帧的次序仍需对齐。常规CPU和真人切页尚待验证。[回执](verification/maintenance/map-label-row-search-20261124/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 
