@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-积压藏品稳定卡片和地图首显仍超半秒；需缩短读出当前文字、地图节点及完整库存证据的时间。真人实测暂缓。[回执](verification/maintenance/ocr-bounded-rgb-screen-20261123/summary.json)。
+地图正确首显和积压藏品完整显示仍超过500毫秒；缩短当前地图识别及持有证据核对仍待验证。真人实测暂缓。[回执](verification/maintenance/ocr-capture-demand-20261124/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 

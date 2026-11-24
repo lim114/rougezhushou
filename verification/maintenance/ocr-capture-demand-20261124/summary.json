@@ -1,0 +1,431 @@
+{
+  "title": "核对采集唤醒、整帧识别吞吐与地图藏品首显",
+  "baseline_commit": "edb859ba4b32c99cff0e9ab14ba29ab71ae375bd",
+  "target_ms": 500,
+  "acceptance_complete": false,
+  "capture_method": "固定100毫秒窗口采集。对照组沿用100毫秒自动检查和已有的就绪计时器；试验组在新增变化候选入队后排队通知Qt，自动模式使用默认检查间隔且有识别槽位时立即尝试派发。两组使用相同候选计数探针。对地图和双旧页积压的藏品分别进行正反顺序各一组对照。",
+  "capture_demand": {
+    "map": {
+      "base": {
+        "n": 2,
+        "trials": [
+          {
+            "first_correct_window_ms": 2432.28,
+            "queue_ms": 57.22,
+            "target_read_ms": 1595.34,
+            "pending_at_qt_display": 6,
+            "full_ocr_stage_ms": 836.57,
+            "local_gold_stage_ms": 309.66,
+            "clear_to_window_ms": 2049.8,
+            "subsequent_pixel_failures": 0
+          },
+          {
+            "first_correct_window_ms": 1724.57,
+            "queue_ms": 54.06,
+            "target_read_ms": 919.56,
+            "pending_at_qt_display": 7,
+            "full_ocr_stage_ms": 460.31,
+            "local_gold_stage_ms": 222.59,
+            "clear_to_window_ms": 1319.6,
+            "subsequent_pixel_failures": 0
+          }
+        ],
+        "median": {
+          "first_correct_window_ms": 2078.43,
+          "queue_ms": 55.64,
+          "target_read_ms": 1257.45,
+          "pending_at_qt_display": 6.5,
+          "full_ocr_stage_ms": 648.44,
+          "local_gold_stage_ms": 266.12,
+          "clear_to_window_ms": 1684.7,
+          "subsequent_pixel_failures": 0.0
+        }
+      },
+      "wake": {
+        "n": 2,
+        "trials": [
+          {
+            "first_correct_window_ms": 1919.68,
+            "queue_ms": 81.36,
+            "target_read_ms": 1034.32,
+            "pending_at_qt_display": 6,
+            "full_ocr_stage_ms": 495.78,
+            "local_gold_stage_ms": 253.46,
+            "clear_to_window_ms": 1512.4,
+            "subsequent_pixel_failures": 0
+          },
+          {
+            "first_correct_window_ms": 1935.85,
+            "queue_ms": 65.36,
+            "target_read_ms": 1093.52,
+            "pending_at_qt_display": 6,
+            "full_ocr_stage_ms": 649.36,
+            "local_gold_stage_ms": 153.29,
+            "clear_to_window_ms": 1536.3,
+            "subsequent_pixel_failures": 0
+          }
+        ],
+        "median": {
+          "first_correct_window_ms": 1927.76,
+          "queue_ms": 73.36,
+          "target_read_ms": 1063.92,
+          "pending_at_qt_display": 6.0,
+          "full_ocr_stage_ms": 572.57,
+          "local_gold_stage_ms": 203.38,
+          "clear_to_window_ms": 1524.35,
+          "subsequent_pixel_failures": 0.0
+        }
+      }
+    },
+    "two": {
+      "base": {
+        "n": 2,
+        "trials": [
+          {
+            "first_correct_window_ms": 844.13,
+            "queue_ms": 138.72,
+            "target_read_ms": 1884.41,
+            "pending_at_qt_display": 0,
+            "stable_card_pixels_ms": 2913.11
+          },
+          {
+            "first_correct_window_ms": 874.81,
+            "queue_ms": 152.6,
+            "target_read_ms": 1684.06,
+            "pending_at_qt_display": 0,
+            "stable_card_pixels_ms": 2370.69
+          }
+        ],
+        "median": {
+          "first_correct_window_ms": 859.47,
+          "queue_ms": 145.66,
+          "target_read_ms": 1784.24,
+          "pending_at_qt_display": 0.0,
+          "stable_card_pixels_ms": 2641.9
+        }
+      },
+      "wake": {
+        "n": 2,
+        "trials": [
+          {
+            "first_correct_window_ms": 918.19,
+            "queue_ms": 144.3,
+            "target_read_ms": 1952.75,
+            "pending_at_qt_display": 0,
+            "stable_card_pixels_ms": 2834.93
+          },
+          {
+            "first_correct_window_ms": 787.92,
+            "queue_ms": 130.0,
+            "target_read_ms": 1586.74,
+            "pending_at_qt_display": 0,
+            "stable_card_pixels_ms": 2468.14
+          }
+        ],
+        "median": {
+          "first_correct_window_ms": 853.06,
+          "queue_ms": 137.15,
+          "target_read_ms": 1769.74,
+          "pending_at_qt_display": 0.0,
+          "stable_card_pixels_ms": 2651.53
+        }
+      }
+    }
+  },
+  "ocr_method": "核显FP32。普通整帧文字发现试验沿用原批次及检测和解码，同时执行CPU下一批字向检查与GPU当前批转写。预取的地图、藏品已有显式模式。4张固定画面逐张交替四轮，禁用文本缓存，第1轮预热；28帧两条独立识别器交替顺序读取，比较完整事实与按顺序产生的中途结果。",
+  "ocr_micro": {
+    "run-map-closed.png": {
+      "warm_median_ms": [
+        187.9,
+        168.6
+      ]
+    },
+    "run-relic-multicard.png": {
+      "warm_median_ms": [
+        324.0,
+        333.9
+      ]
+    },
+    "run-relic-open.png": {
+      "warm_median_ms": [
+        225.4,
+        228.1
+      ]
+    },
+    "operator-kaltsit.png": {
+      "warm_median_ms": [
+        269.5,
+        242.8
+      ]
+    }
+  },
+  "recognition_replay": {
+    "frames": 28,
+    "identical_complete_observations_and_ordered_callbacks": {
+      "unknown": 1,
+      "exploration": 22,
+      "run_relics": 2,
+      "operator_detail": 1,
+      "run_roster": 2
+    },
+    "full_read_ms_by_input": [
+      [
+        1902.99,
+        1463.74
+      ],
+      [
+        1265.8,
+        1776.35
+      ],
+      [
+        1205.16,
+        1093.79
+      ],
+      [
+        1394.7,
+        1429.52
+      ],
+      [
+        1109.32,
+        1009.0
+      ],
+      [
+        996.2,
+        1033.93
+      ],
+      [
+        1423.72,
+        1302.2
+      ],
+      [
+        1258.71,
+        1347.22
+      ],
+      [
+        1281.96,
+        1274.64
+      ],
+      [
+        1479.7,
+        1435.94
+      ],
+      [
+        1200.13,
+        1114.46
+      ],
+      [
+        1112.46,
+        1033.78
+      ],
+      [
+        1077.36,
+        953.1
+      ],
+      [
+        538.91,
+        560.59
+      ],
+      [
+        1163.69,
+        1205.8
+      ],
+      [
+        1032.4,
+        1080.76
+      ],
+      [
+        1145.55,
+        1061.75
+      ],
+      [
+        878.02,
+        877.49
+      ],
+      [
+        849.25,
+        974.51
+      ],
+      [
+        1372.63,
+        1398.48
+      ],
+      [
+        997.48,
+        995.73
+      ],
+      [
+        1021.6,
+        1041.35
+      ],
+      [
+        1500.77,
+        1424.46
+      ],
+      [
+        855.17,
+        950.32
+      ],
+      [
+        885.61,
+        989.62
+      ],
+      [
+        828.98,
+        837.84
+      ],
+      [
+        1141.71,
+        1015.31
+      ],
+      [
+        2033.15,
+        2161.16
+      ]
+    ],
+    "warm_mean_ms": [
+      1150.0,
+      1162.2
+    ],
+    "warm_median_ms": [
+      1141.7,
+      1061.8
+    ]
+  },
+  "ocr_window": {
+    "map": {
+      "ctrl": {
+        "n": 2,
+        "trials": [
+          {
+            "first_correct_window_ms": 1563.82,
+            "queue_ms": 70.16,
+            "target_read_ms": 752.65,
+            "pending_at_qt_display": 6,
+            "full_ocr_stage_ms": 420.36,
+            "local_gold_stage_ms": 59.22,
+            "clear_to_window_ms": 1154.7,
+            "subsequent_pixel_failures": 0
+          },
+          {
+            "first_correct_window_ms": 1759.68,
+            "queue_ms": 33.74,
+            "target_read_ms": 988.8,
+            "pending_at_qt_display": 6,
+            "full_ocr_stage_ms": 600.67,
+            "local_gold_stage_ms": 138.14,
+            "clear_to_window_ms": 1358.0,
+            "subsequent_pixel_failures": 0
+          }
+        ],
+        "median": {
+          "first_correct_window_ms": 1661.75,
+          "queue_ms": 51.95,
+          "target_read_ms": 870.72,
+          "pending_at_qt_display": 6.0,
+          "full_ocr_stage_ms": 510.51,
+          "local_gold_stage_ms": 98.68,
+          "clear_to_window_ms": 1256.35,
+          "subsequent_pixel_failures": 0.0
+        }
+      },
+      "stream": {
+        "n": 2,
+        "trials": [
+          {
+            "first_correct_window_ms": 1848.27,
+            "queue_ms": 53.31,
+            "target_read_ms": 1063.09,
+            "pending_at_qt_display": 6,
+            "full_ocr_stage_ms": 506.07,
+            "local_gold_stage_ms": 270.91,
+            "clear_to_window_ms": 1445.7,
+            "subsequent_pixel_failures": 0
+          },
+          {
+            "first_correct_window_ms": 1659.05,
+            "queue_ms": 66.08,
+            "target_read_ms": 923.38,
+            "pending_at_qt_display": 5,
+            "full_ocr_stage_ms": 561.48,
+            "local_gold_stage_ms": 127.41,
+            "clear_to_window_ms": 1256.1,
+            "subsequent_pixel_failures": 0
+          }
+        ],
+        "median": {
+          "first_correct_window_ms": 1753.66,
+          "queue_ms": 59.7,
+          "target_read_ms": 993.23,
+          "pending_at_qt_display": 5.5,
+          "full_ocr_stage_ms": 533.77,
+          "local_gold_stage_ms": 199.16,
+          "clear_to_window_ms": 1350.9,
+          "subsequent_pixel_failures": 0.0
+        }
+      }
+    },
+    "two": {
+      "ctrl": {
+        "n": 2,
+        "trials": [
+          {
+            "first_correct_window_ms": 824.66,
+            "queue_ms": 147.57,
+            "target_read_ms": 1673.01,
+            "pending_at_qt_display": 0,
+            "stable_card_pixels_ms": 2456.16
+          },
+          {
+            "first_correct_window_ms": 873.75,
+            "queue_ms": 160.56,
+            "target_read_ms": 1617.47,
+            "pending_at_qt_display": 0,
+            "stable_card_pixels_ms": 2472.04
+          }
+        ],
+        "median": {
+          "first_correct_window_ms": 849.2,
+          "queue_ms": 154.06,
+          "target_read_ms": 1645.24,
+          "pending_at_qt_display": 0.0,
+          "stable_card_pixels_ms": 2464.1
+        }
+      },
+      "stream": {
+        "n": 2,
+        "trials": [
+          {
+            "first_correct_window_ms": 723.71,
+            "queue_ms": 143.41,
+            "target_read_ms": 1705.3,
+            "pending_at_qt_display": 0,
+            "stable_card_pixels_ms": 2611.57
+          },
+          {
+            "first_correct_window_ms": 853.61,
+            "queue_ms": 135.26,
+            "target_read_ms": 1794.14,
+            "pending_at_qt_display": 0,
+            "stable_card_pixels_ms": 2709.68
+          }
+        ],
+        "median": {
+          "first_correct_window_ms": 788.66,
+          "queue_ms": 139.33,
+          "target_read_ms": 1749.72,
+          "pending_at_qt_display": 0.0,
+          "stable_card_pixels_ms": 2660.62
+        }
+      }
+    }
+  },
+  "window_method": "核显隔离助手重放同一段24帧地图过渡，以及两张旧页仍在识别时新展开的藏品。分别采集源窗口、助手窗口，核对地图12节点和当前位置、两件可点击藏品及完整卡片稳定像素。目标帧排队从采到该帧至开始识别；地图阶段结果与藏品整帧返回的调用终点不同。所有数字以毫秒计。",
+  "limitations": [
+    "同机回放，无物理点击；每种窗口条件仅两次。",
+    "总识别批次中首帧因包含初始化不纳入热态均值。",
+    "4张图片的单项计时只涵盖文字OCR。",
+    "一次试验更快、另一次更慢不能证明稳定提速。"
+  ],
+  "decision": "保留现有采集、派发及OCR执行方式。该批记录两种隔离试验的收益和波动；没有将候选设为生产默认。",
+  "private_checks": "每次回放结束校验既有私人记录的字节摘要；源画面、操作记录与识别内容保留本机。"
+}
