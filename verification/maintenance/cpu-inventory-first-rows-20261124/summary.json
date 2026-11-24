@@ -1,0 +1,1217 @@
+{
+  "title": "提前识别藏品卡并核对当前页面遮挡",
+  "baseline_commit": "07dab3a9d",
+  "summary": "普通CPU三轮回放，结合地图文字核对的两卡首显中位数由1100降至940毫秒，整页由1758变为1857毫秒。仅先读底部会在商店或干员遮挡时误报。另两张真实多排页完整读取分别确认9件、14件，提前显示均未触发。",
+  "target_ms": 500,
+  "acceptance_complete": false,
+  "implementation_changed": false,
+  "method": "隔离Windows源窗口和助手窗口，热普通CPU，按每组同期对照交错三轮。主要场景从不同楼层地图切入两件目标藏品的展开页，起初目标卡不可见。首显指两张正确卡在最终网格位置的像素持续匹配，整页另计最后一次完整刷新后首次匹配。回放不操作真实游戏。",
+  "batch_prefix": {
+    "ordinary_cpu": {
+      "batches": 9,
+      "rows": 49,
+      "ends": [
+        147.1,
+        212.1,
+        250.6,
+        290.5,
+        329.6,
+        367.0,
+        412.3,
+        486.6,
+        509.7
+      ],
+      "minimum": [
+        [
+          1,
+          2,
+          3,
+          4,
+          7,
+          8,
+          9
+        ]
+      ],
+      "prefix_name_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        3
+      ]
+    },
+    "interpretation": "该回放共49行。按原始顺序第八批首次读齐一件目标藏品及一件战术道具，第九批才读齐两张目标藏品。事后枚举以三项名称都成立为标准，不是运行时择批规则。"
+  },
+  "windows": {
+    "firstrows": {
+      "refcpu": {
+        "runs": [
+          {
+            "stable_ms": 1120.47,
+            "full_ms": 1968.63,
+            "same_final_fields": true,
+            "phase": [],
+            "clocks": []
+          },
+          {
+            "stable_ms": 1332.57,
+            "full_ms": 2196.8,
+            "same_final_fields": true,
+            "phase": [],
+            "clocks": []
+          },
+          {
+            "stable_ms": 1173.69,
+            "full_ms": 2040.53,
+            "same_final_fields": true,
+            "phase": [],
+            "clocks": []
+          }
+        ],
+        "median_ms": {
+          "stable_ms": 1173.69,
+          "full_ms": 2040.53
+        },
+        "below_500": 0
+      },
+      "stagecpu": {
+        "runs": [
+          {
+            "stable_ms": 934.43,
+            "full_ms": 2026.96,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 26,
+                "total": 49,
+                "new_rows": 24,
+                "ms": 430.88,
+                "emitted": 3
+              }
+            ],
+            "clocks": []
+          },
+          {
+            "stable_ms": 940.83,
+            "full_ms": 2088.49,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 26,
+                "total": 49,
+                "new_rows": 24,
+                "ms": 410.62,
+                "emitted": 3
+              }
+            ],
+            "clocks": []
+          },
+          {
+            "stable_ms": 976.9,
+            "full_ms": 2166.25,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 26,
+                "total": 49,
+                "new_rows": 24,
+                "ms": 415.74,
+                "emitted": 3
+              }
+            ],
+            "clocks": []
+          }
+        ],
+        "median_ms": {
+          "stable_ms": 940.83,
+          "full_ms": 2088.49
+        },
+        "below_500": 0
+      }
+    },
+    "guardrows": {
+      "refcpu": {
+        "runs": [
+          {
+            "stable_ms": 1068.94,
+            "full_ms": 1834.83,
+            "same_final_fields": true,
+            "phase": [],
+            "clocks": []
+          },
+          {
+            "stable_ms": 1127.7,
+            "full_ms": 1842.86,
+            "same_final_fields": true,
+            "phase": [],
+            "clocks": []
+          },
+          {
+            "stable_ms": 942.31,
+            "full_ms": 1624.75,
+            "same_final_fields": true,
+            "phase": [],
+            "clocks": []
+          }
+        ],
+        "median_ms": {
+          "stable_ms": 1068.94,
+          "full_ms": 1834.83
+        },
+        "below_500": 0
+      },
+      "stagecpu": {
+        "runs": [
+          {
+            "stable_ms": 1079.31,
+            "full_ms": 1893.2,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 43,
+                "total": 49,
+                "new_rows": 41,
+                "ms": 583.02,
+                "emitted": 3
+              }
+            ],
+            "clocks": []
+          },
+          {
+            "stable_ms": 884.61,
+            "full_ms": 1685.15,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 43,
+                "total": 49,
+                "new_rows": 41,
+                "ms": 485.38,
+                "emitted": 3
+              }
+            ],
+            "clocks": []
+          },
+          {
+            "stable_ms": 1137.78,
+            "full_ms": 1906.21,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 43,
+                "total": 49,
+                "new_rows": 41,
+                "ms": 608.82,
+                "emitted": 3
+              }
+            ],
+            "clocks": []
+          }
+        ],
+        "median_ms": {
+          "stable_ms": 1079.31,
+          "full_ms": 1893.2
+        },
+        "below_500": 0
+      }
+    },
+    "rasterrows": {
+      "refcpu": {
+        "runs": [
+          {
+            "stable_ms": 1164.89,
+            "full_ms": 1871.01,
+            "same_final_fields": true,
+            "phase": [],
+            "clocks": []
+          },
+          {
+            "stable_ms": 945.38,
+            "full_ms": 1607.45,
+            "same_final_fields": true,
+            "phase": [],
+            "clocks": []
+          },
+          {
+            "stable_ms": 1051.89,
+            "full_ms": 1740.25,
+            "same_final_fields": true,
+            "phase": [],
+            "clocks": []
+          }
+        ],
+        "median_ms": {
+          "stable_ms": 1051.89,
+          "full_ms": 1740.25
+        },
+        "below_500": 0
+      },
+      "stagecpu": {
+        "runs": [
+          {
+            "stable_ms": 800.31,
+            "full_ms": 1596.66,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 39,
+                "total": 49,
+                "new_rows": 37,
+                "ms": 322.05,
+                "emitted": 3
+              }
+            ],
+            "clocks": []
+          },
+          {
+            "stable_ms": 1010.65,
+            "full_ms": 1822.79,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 39,
+                "total": 49,
+                "new_rows": 37,
+                "ms": 511.45,
+                "emitted": 3
+              }
+            ],
+            "clocks": []
+          },
+          {
+            "stable_ms": 969.7,
+            "full_ms": 1838.96,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 39,
+                "total": 49,
+                "new_rows": 37,
+                "ms": 432.26,
+                "emitted": 3
+              }
+            ],
+            "clocks": []
+          }
+        ],
+        "median_ms": {
+          "stable_ms": 969.7,
+          "full_ms": 1822.79
+        },
+        "below_500": 0
+      }
+    },
+    "enrolledrows": {
+      "refcpu": {
+        "runs": [
+          {
+            "stable_ms": 906.99,
+            "full_ms": 1680.21,
+            "same_final_fields": true,
+            "phase": [],
+            "clocks": [
+              [
+                "_prepare",
+                70.53,
+                297.29
+              ],
+              [
+                "_prepare_text",
+                297.32,
+                848.47
+              ]
+            ]
+          },
+          {
+            "stable_ms": 1099.9,
+            "full_ms": 1824.2,
+            "same_final_fields": true,
+            "phase": [],
+            "clocks": [
+              [
+                "_prepare",
+                42.75,
+                318.95
+              ],
+              [
+                "_prepare_text",
+                318.98,
+                1006.28
+              ]
+            ]
+          },
+          {
+            "stable_ms": 1101.48,
+            "full_ms": 1758.06,
+            "same_final_fields": true,
+            "phase": [],
+            "clocks": [
+              [
+                "_prepare",
+                59.14,
+                340.37
+              ],
+              [
+                "_prepare_text",
+                340.4,
+                1015.29
+              ]
+            ]
+          }
+        ],
+        "median_ms": {
+          "stable_ms": 1099.9,
+          "full_ms": 1758.06
+        },
+        "below_500": 0
+      },
+      "stagecpu": {
+        "runs": [
+          {
+            "stable_ms": 1008.1,
+            "full_ms": 1867.25,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 39,
+                "total": 49,
+                "new_rows": 37,
+                "ms": 523.88,
+                "emitted": 3
+              }
+            ],
+            "clocks": [
+              [
+                "_prepare",
+                62.26,
+                367.35
+              ],
+              [
+                "_warm_rows",
+                434.62,
+                961.82
+              ],
+              [
+                "_prepare_text",
+                367.37,
+                1121.63
+              ]
+            ]
+          },
+          {
+            "stable_ms": 878.24,
+            "full_ms": 1653.55,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 39,
+                "total": 49,
+                "new_rows": 37,
+                "ms": 397.03,
+                "emitted": 3
+              }
+            ],
+            "clocks": [
+              [
+                "_prepare",
+                41.33,
+                344.6
+              ],
+              [
+                "_warm_rows",
+                418.41,
+                818.29
+              ],
+              [
+                "_prepare_text",
+                344.63,
+                947.56
+              ]
+            ]
+          },
+          {
+            "stable_ms": 940.21,
+            "full_ms": 1857.38,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 39,
+                "total": 49,
+                "new_rows": 37,
+                "ms": 442.18,
+                "emitted": 3
+              }
+            ],
+            "clocks": [
+              [
+                "_prepare",
+                59.67,
+                367.85
+              ],
+              [
+                "_warm_rows",
+                446.48,
+                892.51
+              ],
+              [
+                "_prepare_text",
+                367.87,
+                1067.06
+              ]
+            ]
+          }
+        ],
+        "median_ms": {
+          "stable_ms": 940.21,
+          "full_ms": 1857.38
+        },
+        "below_500": 0
+      }
+    },
+    "quantsiderows": {
+      "refcpu": {
+        "runs": [
+          {
+            "stable_ms": 1192.26,
+            "full_ms": 1907.06,
+            "same_final_fields": true,
+            "phase": [],
+            "clocks": []
+          },
+          {
+            "stable_ms": 1158.42,
+            "full_ms": 1848.23,
+            "same_final_fields": true,
+            "phase": [],
+            "clocks": []
+          },
+          {
+            "stable_ms": 1295.36,
+            "full_ms": 1981.77,
+            "same_final_fields": true,
+            "phase": [],
+            "clocks": []
+          }
+        ],
+        "median_ms": {
+          "stable_ms": 1192.26,
+          "full_ms": 1907.06
+        },
+        "below_500": 0
+      },
+      "stagecpu": {
+        "runs": [
+          {
+            "stable_ms": 1236.23,
+            "full_ms": 2657.69,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 38,
+                "total": 49,
+                "new_rows": 37,
+                "ms": 647.92,
+                "emitted": 3
+              }
+            ],
+            "clocks": [
+              [
+                "_prepare_int8",
+                59.34,
+                417.88
+              ],
+              [
+                "_warm_rows",
+                501.35,
+                1152.1
+              ],
+              [
+                "_prepare_fp32",
+                1152.85,
+                1440.48
+              ],
+              [
+                "_prepare_text",
+                417.91,
+                1894.78
+              ]
+            ]
+          },
+          {
+            "stable_ms": 1146.31,
+            "full_ms": 2440.61,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 38,
+                "total": 49,
+                "new_rows": 37,
+                "ms": 596.37,
+                "emitted": 3
+              }
+            ],
+            "clocks": [
+              [
+                "_prepare_int8",
+                39.87,
+                401.94
+              ],
+              [
+                "_warm_rows",
+                473.99,
+                1074.71
+              ],
+              [
+                "_prepare_fp32",
+                1075.84,
+                1380.34
+              ],
+              [
+                "_prepare_text",
+                401.97,
+                1730.17
+              ]
+            ]
+          },
+          {
+            "stable_ms": 1068.57,
+            "full_ms": 2442.05,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 38,
+                "total": 49,
+                "new_rows": 37,
+                "ms": 536.62,
+                "emitted": 3
+              }
+            ],
+            "clocks": [
+              [
+                "_prepare_int8",
+                56.03,
+                403.43
+              ],
+              [
+                "_warm_rows",
+                472.6,
+                1012.99
+              ],
+              [
+                "_prepare_fp32",
+                1013.63,
+                1254.3
+              ],
+              [
+                "_prepare_text",
+                403.46,
+                1718.68
+              ]
+            ]
+          }
+        ],
+        "median_ms": {
+          "stable_ms": 1146.31,
+          "full_ms": 2442.05
+        },
+        "below_500": 0
+      }
+    },
+    "locrows": {
+      "refcpu": {
+        "runs": [
+          {
+            "stable_ms": 1023.42,
+            "full_ms": 1692.39,
+            "same_final_fields": true,
+            "phase": [],
+            "clocks": []
+          },
+          {
+            "stable_ms": 1108.82,
+            "full_ms": 1824.09,
+            "same_final_fields": true,
+            "phase": [],
+            "clocks": []
+          },
+          {
+            "stable_ms": 999.91,
+            "full_ms": 1723.11,
+            "same_final_fields": true,
+            "phase": [],
+            "clocks": []
+          }
+        ],
+        "median_ms": {
+          "stable_ms": 1023.42,
+          "full_ms": 1723.11
+        },
+        "below_500": 0
+      },
+      "stage625cpu": {
+        "runs": [
+          {
+            "stable_ms": 1683.14,
+            "full_ms": 2316.46,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 43,
+                "total": 51,
+                "new_rows": 43,
+                "ms": 540.81,
+                "emitted": 0
+              }
+            ],
+            "clocks": [
+              [
+                "_prepare_small",
+                58.66,
+                196.65
+              ],
+              [
+                "_warm_rows",
+                290.32,
+                831.64
+              ],
+              [
+                "_prepare_fp32",
+                832.38,
+                1109.65
+              ],
+              [
+                "_prepare_text",
+                196.69,
+                1588.18
+              ]
+            ]
+          },
+          {
+            "stable_ms": 1705.5,
+            "full_ms": 2389.42,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 43,
+                "total": 51,
+                "new_rows": 43,
+                "ms": 554.51,
+                "emitted": 0
+              }
+            ],
+            "clocks": [
+              [
+                "_prepare_small",
+                72.97,
+                248.67
+              ],
+              [
+                "_warm_rows",
+                346.61,
+                901.69
+              ],
+              [
+                "_prepare_fp32",
+                902.56,
+                1190.91
+              ],
+              [
+                "_prepare_text",
+                248.7,
+                1621.22
+              ]
+            ]
+          },
+          {
+            "stable_ms": 1705.92,
+            "full_ms": 2368.13,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 43,
+                "total": 51,
+                "new_rows": 43,
+                "ms": 575.36,
+                "emitted": 0
+              }
+            ],
+            "clocks": [
+              [
+                "_prepare_small",
+                59.42,
+                224.83
+              ],
+              [
+                "_warm_rows",
+                312.89,
+                889.02
+              ],
+              [
+                "_prepare_fp32",
+                889.95,
+                1182.99
+              ],
+              [
+                "_prepare_text",
+                224.88,
+                1631.55
+              ]
+            ]
+          }
+        ],
+        "median_ms": {
+          "stable_ms": 1705.5,
+          "full_ms": 2368.13
+        },
+        "below_500": 0
+      },
+      "stage750cpu": {
+        "runs": [
+          {
+            "stable_ms": 1592.59,
+            "full_ms": 2283.08,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 41,
+                "total": 52,
+                "new_rows": 41,
+                "ms": 468.16,
+                "emitted": 0
+              }
+            ],
+            "clocks": [
+              [
+                "_prepare_small",
+                61.4,
+                288.17
+              ],
+              [
+                "_warm_rows",
+                370.58,
+                839.27
+              ],
+              [
+                "_prepare_fp32",
+                839.97,
+                1016.69
+              ],
+              [
+                "_prepare_text",
+                288.2,
+                1522.34
+              ]
+            ]
+          },
+          {
+            "stable_ms": 1702.43,
+            "full_ms": 2350.98,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 41,
+                "total": 52,
+                "new_rows": 41,
+                "ms": 551.89,
+                "emitted": 0
+              }
+            ],
+            "clocks": [
+              [
+                "_prepare_small",
+                60.88,
+                297.06
+              ],
+              [
+                "_warm_rows",
+                384.38,
+                936.89
+              ],
+              [
+                "_prepare_fp32",
+                937.49,
+                1231.55
+              ],
+              [
+                "_prepare_text",
+                297.1,
+                1649.57
+              ]
+            ]
+          },
+          {
+            "stable_ms": 1819.77,
+            "full_ms": 2534.62,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 41,
+                "total": 52,
+                "new_rows": 41,
+                "ms": 667.3,
+                "emitted": 0
+              }
+            ],
+            "clocks": [
+              [
+                "_prepare_small",
+                50.4,
+                248.93
+              ],
+              [
+                "_warm_rows",
+                334.86,
+                1003.09
+              ],
+              [
+                "_prepare_fp32",
+                1004.25,
+                1243.03
+              ],
+              [
+                "_prepare_text",
+                248.96,
+                1724.2
+              ]
+            ]
+          }
+        ],
+        "median_ms": {
+          "stable_ms": 1702.43,
+          "full_ms": 2350.98
+        },
+        "below_500": 0
+      }
+    },
+    "scorelocrows": {
+      "refcpu": {
+        "runs": [
+          {
+            "stable_ms": 989.63,
+            "full_ms": 1759.92,
+            "same_final_fields": true,
+            "phase": [],
+            "clocks": []
+          },
+          {
+            "stable_ms": 1233.97,
+            "full_ms": 1953.06,
+            "same_final_fields": true,
+            "phase": [],
+            "clocks": []
+          },
+          {
+            "stable_ms": 974.02,
+            "full_ms": 1671.06,
+            "same_final_fields": true,
+            "phase": [],
+            "clocks": []
+          }
+        ],
+        "median_ms": {
+          "stable_ms": 989.63,
+          "full_ms": 1759.92
+        },
+        "below_500": 0
+      },
+      "stage625cpu": {
+        "runs": [
+          {
+            "stable_ms": 940.16,
+            "full_ms": 2289.5,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 43,
+                "total": 51,
+                "new_rows": 43,
+                "ms": 508.15,
+                "emitted": 3
+              }
+            ],
+            "clocks": [
+              [
+                "_prepare_small",
+                73.74,
+                290.67
+              ],
+              [
+                "_warm_rows",
+                378.9,
+                890.07
+              ],
+              [
+                "_prepare_fp32",
+                890.76,
+                1117.35
+              ],
+              [
+                "_prepare_text",
+                290.7,
+                1607.14
+              ]
+            ]
+          },
+          {
+            "stable_ms": 1003.6,
+            "full_ms": 2384.96,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 43,
+                "total": 51,
+                "new_rows": 43,
+                "ms": 571.2,
+                "emitted": 3
+              }
+            ],
+            "clocks": [
+              [
+                "_prepare_small",
+                63.86,
+                258.25
+              ],
+              [
+                "_warm_rows",
+                349.42,
+                923.59
+              ],
+              [
+                "_prepare_fp32",
+                924.22,
+                1229.33
+              ],
+              [
+                "_prepare_text",
+                258.29,
+                1724.51
+              ]
+            ]
+          },
+          {
+            "stable_ms": 943.11,
+            "full_ms": 2367.5,
+            "same_final_fields": true,
+            "phase": [
+              {
+                "selected": 43,
+                "total": 51,
+                "new_rows": 43,
+                "ms": 570.46,
+                "emitted": 3
+              }
+            ],
+            "clocks": [
+              [
+                "_prepare_small",
+                60.37,
+                232.17
+              ],
+              [
+                "_warm_rows",
+                316.36,
+                890.23
+              ],
+              [
+                "_prepare_fp32",
+                891.17,
+                1185.96
+              ],
+              [
+                "_prepare_text",
+                232.2,
+                1647.22
+              ]
+            ]
+          }
+        ],
+        "median_ms": {
+          "stable_ms": 943.11,
+          "full_ms": 2367.5
+        },
+        "below_500": 0
+      }
+    }
+  },
+  "variants": {
+    "firstrows": "先读框底部超过画面高度61%的行，以原尺寸张量计算标题、使用说明和底栏，再读余下行。缺少中部遮挡核对。",
+    "guardrows": "在优先识别集合内增加页眉确认文字和中部文字。对照完整卡名、说明和底部控件，并要求中部只出现可解释的地图词及已定位计数。",
+    "rasterrows": "中部图形匹配的高相似地图词只参与当前页身份核对。文字模型继续负责藏品身份与完整页面。模板来自其余原生画面。",
+    "enrolledrows": "在上述图形库中加入独立录像中的已识别地图字样。",
+    "quantsiderows": "INT8检测给预读提供文字框，完整识别仍用原FP32检测并复用完全相同的识字输入。",
+    "locrows": "仅降低预读检测尺寸至62.5%或75%，然后按原图坐标裁出文字；独立完整路径使用原始检测尺寸。",
+    "scorelocrows": "预读检测缩至62.5%，按现有正式读字置信度筛去低分文字，再核对中部遮挡。"
+  },
+  "gallery": {
+    "pages": 50,
+    "label_reference": "原识别器最终藏品名称回调；合成遮挡另用不发出预读作为独立标准。",
+    "lower_disagrees_with_final": 4,
+    "lower_activates_under_occlusion": 15,
+    "full_board_gate_active": 2,
+    "full_board_gate_active_on_occlusion": 0,
+    "trained_guard_validation": {
+      "pages": 53,
+      "natural_positive": 2,
+      "occlusions": 34,
+      "occlusion_with_partial_names": 0,
+      "visually_substituted": 96,
+      "different_word_vs_full_cpu_on_same_boxes": 0
+    },
+    "reduced_detector_validation": {
+      "0.625": {
+        "pages": 53,
+        "natural_positive": 0,
+        "occlusions": 34,
+        "occlusion_with_partial_names": 0,
+        "visually_substituted": 89,
+        "different_word_vs_full_cpu_on_same_boxes": 3
+      },
+      "0.75": {
+        "pages": 53,
+        "natural_positive": 0,
+        "occlusions": 34,
+        "occlusion_with_partial_names": 0,
+        "visually_substituted": 101,
+        "different_word_vs_full_cpu_on_same_boxes": 0
+      }
+    },
+    "additional_independent_pages": 21,
+    "independent_positive_pages": [
+      {
+        "canonical_names": 9,
+        "results": {
+          "1.0": {
+            "lower": {
+              "correct": 0,
+              "extra": 0
+            },
+            "guard": {
+              "correct": 0,
+              "extra": 0
+            }
+          },
+          "0.625": {
+            "lower": {
+              "correct": 0,
+              "extra": 0
+            },
+            "guard": {
+              "correct": 0,
+              "extra": 0
+            }
+          },
+          "0.75": {
+            "lower": {
+              "correct": 0,
+              "extra": 0
+            },
+            "guard": {
+              "correct": 0,
+              "extra": 0
+            }
+          }
+        }
+      },
+      {
+        "canonical_names": 14,
+        "results": {
+          "1.0": {
+            "lower": {
+              "correct": 2,
+              "extra": 0
+            },
+            "guard": {
+              "correct": 0,
+              "extra": 0
+            }
+          },
+          "0.625": {
+            "lower": {
+              "correct": 2,
+              "extra": 0
+            },
+            "guard": {
+              "correct": 0,
+              "extra": 0
+            }
+          },
+          "0.75": {
+            "lower": {
+              "correct": 2,
+              "extra": 0
+            },
+            "guard": {
+              "correct": 0,
+              "extra": 0
+            }
+          }
+        }
+      }
+    ],
+    "independent_negative_pages_with_guard_hint": 0,
+    "lower_detector_current_word_cutoff": {
+      "pages": 53,
+      "natural_positive": 1,
+      "occlusions": 34,
+      "occlusion_with_partial_names": 2,
+      "visually_substituted": 89,
+      "different_word_vs_full_cpu_on_same_boxes": 3
+    }
+  },
+  "guard_examples": {
+    "source_frames": 15,
+    "original": 53,
+    "total": 79,
+    "distinct_words": 7,
+    "old_words": 5
+  },
+  "detector": {
+    "calibration": {
+      "training_frames": 18,
+      "spatial": [
+        1,
+        3,
+        320,
+        512
+      ],
+      "seconds": 2.9
+    },
+    "evaluated": 51,
+    "median_detection_ms": [
+      156.65,
+      157.19
+    ],
+    "different_box_count": 41,
+    "different_text_sequence": 49,
+    "different_card_name_sets": 0,
+    "method": "18幅独立录像画面的局部张量做离线INT8校准，评估用完整大小输入，搭配原FP32转录。计时含输入预处理与文字框后处理。"
+  },
+  "same_floor": {
+    "already_visible": true,
+    "captured_window_frames": 6,
+    "all_target_pixels_agreed_before_and_after": true,
+    "method": "真实同楼层折叠/展开图对的隔离窗口回放。折叠页已经通过图标读出同两件藏品。原本要求转场前目标不可见的计时器按设计拒绝这组；核对保留的前后窗口像素后，只记录已有可见性。"
+  },
+  "video_search": [
+    {
+      "frames_sampled": 1964,
+      "candidate_intervals": 25,
+      "confirmed_collapse_labels": 0
+    },
+    {
+      "frames_sampled": 2133,
+      "candidate_intervals": 29,
+      "confirmed_collapse_labels": 0
+    }
+  ],
+  "decision": "本轮候选留在本地实验。新出现卡片和已经在网格中的卡片分开验收。底部选区单独使用会误报，完整预读及二次检测仍拖慢整页。",
+  "limits": [
+    "模板命中和原OCR同字仅是输入样本上的对照，不等同于新场景准确率。",
+    "遮挡样本由真实页合成；不同画面尺寸、其他字体和真人游戏负载的结果仍待验证。",
+    "两段录像每秒取两帧搜索页脚，仅复核命中组，不能排除间隔内或漏提名的短暂开页。"
+  ]
+}
