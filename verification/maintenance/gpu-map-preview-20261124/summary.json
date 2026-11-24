@@ -1,0 +1,206 @@
+{
+  "title": "核显地图预读与整页并行，忙时只保留最新候选",
+  "baseline": "047b3da95",
+  "target_ms": 500,
+  "acceptance_complete": false,
+  "method": "本机核显 FP32 已预热。Windows 原生窗口重放稳定干员页切入地图，两种布局分别交错开关产品预读各三轮。real 为真实录制的过渡动画，layout 为另一地图的清晰图直接切换。起点取源窗口实际绘出变化的帧，终点取助手窗口首次验证正确节点和当前位置的像素。均检查最终节点与后续采样。",
+  "capture": "约100毫秒持续采集，快速地图识别最多一项运行、一项待处理。完整记录读取沿原缓冲运行。测试助手使用核显，默认 CPU 启动沿原路径。",
+  "median_and_mean_ms": {
+    "real": {
+      "off": {
+        "onset_ms": 1344.32,
+        "clear_ms": 1154.67,
+        "queue_ms": 46.54,
+        "read_to_graph_ms": 807.15,
+        "graph_to_window_ms": 98.6,
+        "mean_read_to_graph_ms": 840.92
+      },
+      "on": {
+        "onset_ms": 1419.85,
+        "clear_ms": 1216.0,
+        "queue_ms": 44.16,
+        "read_to_graph_ms": 893.19,
+        "graph_to_window_ms": 101.0,
+        "mean_read_to_graph_ms": 759.52
+      }
+    },
+    "layout": {
+      "off": {
+        "onset_ms": 1064.7,
+        "clear_ms": 1064.7,
+        "queue_ms": 22.57,
+        "read_to_graph_ms": 779.9,
+        "graph_to_window_ms": 96.9,
+        "mean_read_to_graph_ms": 801.32
+      },
+      "on": {
+        "onset_ms": 623.63,
+        "clear_ms": 623.63,
+        "queue_ms": 36.61,
+        "read_to_graph_ms": 312.14,
+        "graph_to_window_ms": 110.1,
+        "mean_read_to_graph_ms": 305.42
+      }
+    }
+  },
+  "runs": {
+    "real": {
+      "off": [
+        {
+          "onset_ms": 1333.44,
+          "clear_ms": 1130.64,
+          "queue_ms": 59.03,
+          "read_to_graph_ms": 799.0,
+          "graph_to_window_ms": 98.6,
+          "first_reader": "full",
+          "subsequent_bad_witnesses": 0,
+          "earlier_incomplete_paints": 0
+        },
+        {
+          "onset_ms": 1344.32,
+          "clear_ms": 1154.67,
+          "queue_ms": 46.54,
+          "read_to_graph_ms": 807.15,
+          "graph_to_window_ms": 102.4,
+          "first_reader": "full",
+          "subsequent_bad_witnesses": 0,
+          "earlier_incomplete_paints": 0
+        },
+        {
+          "onset_ms": 1404.72,
+          "clear_ms": 1202.25,
+          "queue_ms": 36.96,
+          "read_to_graph_ms": 916.6,
+          "graph_to_window_ms": 86.3,
+          "first_reader": "full",
+          "subsequent_bad_witnesses": 0,
+          "earlier_incomplete_paints": 0
+        }
+      ],
+      "on": [
+        {
+          "onset_ms": 1419.85,
+          "clear_ms": 1216.0,
+          "queue_ms": 53.56,
+          "read_to_graph_ms": 893.19,
+          "graph_to_window_ms": 101.0,
+          "first_reader": "full",
+          "subsequent_bad_witnesses": 0,
+          "earlier_incomplete_paints": 0
+        },
+        {
+          "onset_ms": 939.91,
+          "clear_ms": 736.04,
+          "queue_ms": 29.7,
+          "read_to_graph_ms": 409.09,
+          "graph_to_window_ms": 107.2,
+          "first_reader": "preview",
+          "subsequent_bad_witnesses": 0,
+          "earlier_incomplete_paints": 0
+        },
+        {
+          "onset_ms": 1499.55,
+          "clear_ms": 1294.3,
+          "queue_ms": 44.16,
+          "read_to_graph_ms": 976.28,
+          "graph_to_window_ms": 96.3,
+          "first_reader": "full",
+          "subsequent_bad_witnesses": 0,
+          "earlier_incomplete_paints": 0
+        }
+      ]
+    },
+    "layout": {
+      "off": [
+        {
+          "onset_ms": 1157.64,
+          "clear_ms": 1157.64,
+          "queue_ms": 23.17,
+          "read_to_graph_ms": 846.27,
+          "graph_to_window_ms": 104.9,
+          "first_reader": "full",
+          "subsequent_bad_witnesses": 0,
+          "earlier_incomplete_paints": 0
+        },
+        {
+          "onset_ms": 1064.7,
+          "clear_ms": 1064.7,
+          "queue_ms": 22.07,
+          "read_to_graph_ms": 777.78,
+          "graph_to_window_ms": 93.2,
+          "first_reader": "full",
+          "subsequent_bad_witnesses": 0,
+          "earlier_incomplete_paints": 0
+        },
+        {
+          "onset_ms": 1062.89,
+          "clear_ms": 1062.89,
+          "queue_ms": 22.57,
+          "read_to_graph_ms": 779.9,
+          "graph_to_window_ms": 96.9,
+          "first_reader": "full",
+          "subsequent_bad_witnesses": 0,
+          "earlier_incomplete_paints": 0
+        }
+      ],
+      "on": [
+        {
+          "onset_ms": 626.8,
+          "clear_ms": 626.8,
+          "queue_ms": 18.49,
+          "read_to_graph_ms": 332.64,
+          "graph_to_window_ms": 106.7,
+          "first_reader": "preview",
+          "subsequent_bad_witnesses": 0,
+          "earlier_incomplete_paints": 0
+        },
+        {
+          "onset_ms": 590.65,
+          "clear_ms": 590.65,
+          "queue_ms": 36.61,
+          "read_to_graph_ms": 271.49,
+          "graph_to_window_ms": 110.1,
+          "first_reader": "preview",
+          "subsequent_bad_witnesses": 0,
+          "earlier_incomplete_paints": 0
+        },
+        {
+          "onset_ms": 623.63,
+          "clear_ms": 623.63,
+          "queue_ms": 41.81,
+          "read_to_graph_ms": 312.14,
+          "graph_to_window_ms": 125.4,
+          "first_reader": "preview",
+          "subsequent_bad_witnesses": 0,
+          "earlier_incomplete_paints": 0
+        }
+      ]
+    }
+  },
+  "isolated_images": {
+    "input_variants": 112,
+    "groups": {
+      "uniform_film": 50,
+      "archives": 20,
+      "transition": 24,
+      "archive_client_crops": 18
+    },
+    "warm_confirmed": 41,
+    "layouts": 2,
+    "previous_positive_changed": 0,
+    "additional_variants": 4,
+    "warm_miss_median_ms": 14.93,
+    "checked": "原图及裁剪重复计入不同输入，包含同一录像中的相邻帧。所有已输出结果逐格对照两种布局、实际位置与当前显示类型。"
+  },
+  "diagnostic": "额外一次动画回放中，预读从转场后183和451毫秒开始处理两个候选，均未确认地图，第二个候选仍被整页路径成功识别。首绘时缓冲仍有5个候选。仅凭成功帧进入识别的排队时间会漏算此前的选帧等待。",
+  "checks": {
+    "targeted_tests": 91,
+    "window_visible_and_responsive": true,
+    "replay_state_isolated": true,
+    "local_state_hashes_unchanged": true
+  },
+  "limits": [
+    "启用预读六轮均超过500毫秒。动画三轮仅一轮由预读首先正确显示，另两轮回到整页路径。",
+    "只验证了同一区域两种不同地图布局。真人操作、藏品首显、与游戏同跑的负载和其他硬件仍待测。"
+  ]
+}

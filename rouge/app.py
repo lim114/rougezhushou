@@ -121,6 +121,10 @@ class MainWindow(QMainWindow):
         self.settling_detection = None
         from .ocr_engine import default_backend
         backend = default_backend() if ocr_backend is None else ocr_backend
+        self.map_preview_pool = None
+        if backend == 'openvino-gpu':
+            from .map_text_preview import CurrentMapPreview
+            self.map_preview_pool = CurrentMapPreview(self)
         self.capture = GameCapture(pace_updates=True, prioritize_scene_changes=backend == 'openvino-gpu')
         if backend in ('openvino', 'openvino-gpu'):
             from .page_detection import SettlingDetection
@@ -803,6 +807,33 @@ class MainWindow(QMainWindow):
         prepared_text = None
         if detection is not None:
             prepared_text = self.settling_detection.take_text(selected_reader._discovery_ocr)
+        def publish_map(selected, observation, age_ms, *, preview=False):
+            observation['captured_at']=selected['captured_at']
+            observation['_sampling']={'epoch':epoch,'generation':generation,'seq':selected['seq'],
+                                      'job_id':job_id,'phase':'map','age_at_read_ms':age_ms}
+            if preview:
+                observation['_sampling']['current_map_preview'] = True
+            observation['_overlay_frame']={'image':selected['image'],'client_rect':selected.get('client_rect'),
+                'target':selected.get('target'),'captured_at':selected['captured_at'],
+                'run_id':run_context['run_id'],'pointer_bounds':selected.get('pointer_bounds')}
+            self.events.sample.emit((selected['image'],observation))
+
+        if (self.map_preview_pool is not None and automatic and mode != 'visual' and frame is not None
+                and frame['seq'] > self.last_sample_seq and self.compact_window and self.compact_window.map_popup
+                and self.compact_window.map_popup.panel.view.isVisible()
+                and ((self.observation or {}).get('map') or {}).get('status') != 'matched'):
+            engine = selected_reader._engine
+            if engine is not None:
+                from .map_text_preview import read_alongside_full_frame
+                def eligible():
+                    popup = self.compact_window.map_popup
+                    return (not self.closing and self.auto.isChecked() and job_id in self.sample_jobs
+                            and epoch == self.sample_epoch and generation == self.capture.stats()['generation']
+                            and popup is not None and popup.panel.view.isVisible()
+                            and (frame['captured_at'],frame['seq']) > (self.last_sample_at,self.last_sample_seq))
+                self.map_preview_pool.offer((epoch,generation,frame['seq']), eligible,
+                    lambda: read_alongside_full_frame(frame, engine, run_context,
+                        lambda result, age: publish_map(frame, result, age, preview=True)))
         def work():
             try:
                 selected = frame
@@ -828,15 +859,7 @@ class MainWindow(QMainWindow):
                 if mode != 'visual':
                     target = selected.get('target') or {}
                     options['hud_source'] = (epoch, target.get('hwnd'), target.get('pid'))
-                    def publish_map(observation):
-                        observation['captured_at']=selected['captured_at']
-                        observation['_sampling']={'epoch':epoch,'generation':generation,'seq':selected['seq'],
-                                                  'job_id':job_id,'phase':'map','age_at_read_ms':age_at_read_ms}
-                        observation['_overlay_frame']={'image':selected['image'],'client_rect':selected.get('client_rect'),
-                            'target':selected.get('target'),'captured_at':selected['captured_at'],
-                            'run_id':run_context['run_id'],'pointer_bounds':selected.get('pointer_bounds')}
-                        self.events.sample.emit((selected['image'],observation))
-                    options['on_map']=publish_map
+                    options['on_map']=lambda result: publish_map(selected, result, age_at_read_ms)
                 if show_names:
                     def publish_names(names):
                         self.events.held_names_read.emit((job_id, marker, selected['captured_at'], selected['seq'], names))
@@ -967,6 +990,10 @@ class MainWindow(QMainWindow):
             self.busy_gold.complete((marker['epoch'], marker['generation'], self.run.state['id']),
                                     marker.get('seq') or 0, map_read=gold_map)
         seq=(marker or{}).get('seq')or 0
+        if (map_progress and marker.get('current_map_preview') and
+                (not valid or marker['job_id'] not in self.sample_jobs or
+                 (observation['captured_at'],seq) <= (self.last_sample_at,self.last_sample_seq))):
+            return
         if not map_progress:self.finish_sample((marker or {}).get('job_id'),seq)
         completed_reader=observation.pop('_completed_reader',None)
         if completed_reader is not None and not self.busy:

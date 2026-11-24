@@ -246,6 +246,13 @@ class SamplingFlowTests(unittest.TestCase):
             self.assertTrue(window.busy)
             self.assertEqual(order[:2], [('paint', graph['template_id'], 1), ('refresh',)])
             self.assertEqual(window.compact_window.map_popup.panel.view.graph['template_id'], graph['template_id'])
+            # A slower speculative result for this same active job must not
+            # replace an already accepted ordinary map with poorer evidence.
+            late = {**window.observation, '_sampling': {**window.observation['_sampling'],
+                                                       'current_map_preview': True},
+                    'map': {**graph, 'status': 'insufficient'}}
+            window.sample_received((None, late))
+            self.assertEqual(window.observation['map']['status'], 'matched')
             self.assertEqual(window.run.state['resources'], {})
             self.assertEqual(window.run.state['config']['difficulty']['value'], 5)
             self.assertEqual(window.sample_hud['life']['value'], 8)
@@ -277,6 +284,57 @@ class SamplingFlowTests(unittest.TestCase):
         self.assertIn(graph['zone_id'],window.run.state['maps'])
         self.assertFalse(window.run.state['resources'])
         self.assertIsNone(window.run.state['inventory_confirmed_at'])
+
+    def test_late_parallel_map_cannot_replace_the_completed_frame(self):
+        from copy import deepcopy
+        from rouge.map_text_preview import CurrentMapPreview
+        from rouge.player_map_acceptance import fixtures
+        window = self.window
+        window.map_preview_pool = CurrentMapPreview(window)
+        window.reader._engine = object()
+        window.show_compact()
+        window.compact_window.open_map()
+        preview_started = threading.Event()
+        release_preview = threading.Event()
+        sent = threading.Event()
+        graph = deepcopy(fixtures()[0][0])
+        graph['status'] = 'matched'
+        def delayed_preview(frame, engine, context, publish):
+            preview_started.set()
+            release_preview.wait(5)
+            publish({'page': 'exploration', 'nodes': [], 'map': graph}, 0.)
+            sent.set()
+        with patch('rouge.map_text_preview.read_alongside_full_frame', delayed_preview):
+            self.offer(20)
+            window.auto.setChecked(True)
+            try:
+                self.wait_for(lambda: self.entered.is_set() and preview_started.is_set())
+                self.release.set()
+                self.wait_for(lambda: not window.busy)
+                self.assertEqual(window.observation['page'], 'operator')
+            finally:
+                release_preview.set()
+                self.release.set()
+            self.wait_for(sent.is_set)
+            self.qt.processEvents()
+        self.assertEqual(window.observation['page'], 'operator')
+        self.assertFalse(window.run.state['maps'])
+
+    def test_inventory_view_does_not_schedule_a_map_preview(self):
+        window = self.window
+        window.map_preview_pool = Mock()
+        window.reader._engine = object()
+        window.show_compact()
+        window.compact_window.open_map()
+        window.compact_window.open_inventory()
+        self.offer(20)
+        window.auto.setChecked(True)
+        try:
+            self.wait_for(self.entered.is_set)
+            window.map_preview_pool.offer.assert_not_called()
+        finally:
+            self.release.set()
+        self.wait_for(lambda: not window.busy)
 
     def test_map_progress_arriving_after_reset_is_discarded_with_the_full_read(self):
         from copy import deepcopy

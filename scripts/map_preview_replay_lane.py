@@ -15,24 +15,7 @@ import numpy as np
 from PySide6.QtCore import QTimer
 
 from rouge.recognition_cache import CachedOCR
-from rouge.run_config import confirmed_config
-from rouge.viewport import map_evidence, prepare_frame
-from scripts.probe_map_glyph_preview import preview
-
-
-def _read(frame, reader, context):
-    start = time.perf_counter()
-    image, viewport = prepare_frame(frame['image'], frame['client_rect'])
-    evidence = preview(image, reader, confirmed_config(context))
-    if evidence is None:
-        return None
-    observation = deepcopy(dict(evidence, page='exploration', size=viewport['source_size'],
-                                stage=None, run=None, operator=None, node_content=None, limitations=[]))
-    map_evidence(observation, viewport)
-    observation['viewport'] = viewport
-    elapsed = (time.perf_counter() - start) * 1000
-    observation['performance'] = {'stages_ms': {'glyph_map': elapsed}, 'total_ms': elapsed}
-    return observation
+from rouge.map_text_preview import read_frame as _read
 
 
 class ReplayMapLane:
@@ -51,6 +34,8 @@ class ReplayMapLane:
         self.until = self.rearm = 0.
         self.dispatch = window.sample_now
         self.settle = window.prepare_settling_page
+        self.product_preview = window.map_preview_pool
+        window.map_preview_pool = None
         window.sample_now = self.sample_now
         window.prepare_settling_page = self.prepare_settling
         self.timer = QTimer(window)
@@ -132,4 +117,5 @@ class ReplayMapLane:
         self.timer.stop()
         self.window.sample_now = self.dispatch
         self.window.prepare_settling_page = self.settle
+        self.window.map_preview_pool = self.product_preview
         self.worker.shutdown(cancel_futures=True)
