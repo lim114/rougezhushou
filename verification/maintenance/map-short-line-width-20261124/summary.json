@@ -1,0 +1,380 @@
+{
+  "title": "核对地图短行模型宽度及从转场到可见节点的耗时",
+  "baseline_commit": "3fde47ff57cb8336c486c6ca0aee5980da9e5ef5",
+  "acceptance_complete": false,
+  "target_ms": 500,
+  "method": "独立Windows源窗口与助手地图窗；游戏录制的24帧连续转场按时序播放。对同一隔离预读路径比较320与两种短输入宽度。按宽高比排序后的原始批次整组能容纳时使用短宽FP32副本，其余行继续使用原识别器。没有重新训练、裁去文字或提高采集频率。每对设置交替播放三轮。比较分开计时的源窗口转场、地图清晰、目标采样、读出和助手窗口正确节点。",
+  "micro": {
+    "320": {
+      "frames": 23,
+      "baseline_maps": 8,
+      "correct_maps": 8,
+      "wrong_returns": 0,
+      "missed_baseline_maps": 0,
+      "changed_transcriptions": 0,
+      "warm_frame_to_graph_median_ms": 122.97,
+      "warm_frame_to_graph_mean_ms": 128.14
+    },
+    "160": {
+      "frames": 23,
+      "baseline_maps": 8,
+      "correct_maps": 8,
+      "wrong_returns": 0,
+      "missed_baseline_maps": 0,
+      "changed_transcriptions": 35,
+      "warm_frame_to_graph_median_ms": 108.44,
+      "warm_frame_to_graph_mean_ms": 111.86
+    },
+    "224": {
+      "frames": 23,
+      "baseline_maps": 8,
+      "correct_maps": 8,
+      "wrong_returns": 0,
+      "missed_baseline_maps": 0,
+      "changed_transcriptions": 33,
+      "warm_frame_to_graph_median_ms": 110.04,
+      "warm_frame_to_graph_mean_ms": 112.09
+    },
+    "256": {
+      "frames": 23,
+      "baseline_maps": 8,
+      "correct_maps": 8,
+      "wrong_returns": 0,
+      "missed_baseline_maps": 0,
+      "changed_transcriptions": 0,
+      "warm_frame_to_graph_median_ms": 113.73,
+      "warm_frame_to_graph_mean_ms": 116.81
+    }
+  },
+  "window": {
+    "224": {
+      "320": {
+        "runs": [
+          {
+            "switch_to_display_ms": 804.2,
+            "clear_to_display_ms": 401.7,
+            "clear_to_sample_ms": 74.8,
+            "sample_to_read_start_ms": 11.91,
+            "read_to_map_result_ms": 178.73,
+            "remaining_to_window_ms": 136.2,
+            "later_failed_registrations": 0,
+            "after_first_latest_failure_ms": null
+          },
+          {
+            "switch_to_display_ms": 734.2,
+            "clear_to_display_ms": 322.3,
+            "clear_to_sample_ms": 29.8,
+            "sample_to_read_start_ms": 8.51,
+            "read_to_map_result_ms": 148.02,
+            "remaining_to_window_ms": 136.0,
+            "later_failed_registrations": 0,
+            "after_first_latest_failure_ms": null
+          },
+          {
+            "switch_to_display_ms": 768.3,
+            "clear_to_display_ms": 354.7,
+            "clear_to_sample_ms": 55.3,
+            "sample_to_read_start_ms": 12.17,
+            "read_to_map_result_ms": 157.96,
+            "remaining_to_window_ms": 129.3,
+            "later_failed_registrations": 0,
+            "after_first_latest_failure_ms": null
+          }
+        ],
+        "median": {
+          "switch_to_display_ms": 768.3,
+          "clear_to_display_ms": 354.7,
+          "clear_to_sample_ms": 55.3,
+          "sample_to_read_start_ms": 11.91,
+          "read_to_map_result_ms": 157.96,
+          "remaining_to_window_ms": 136.0,
+          "later_failed_registrations": 0
+        }
+      },
+      "224": {
+        "runs": [
+          {
+            "switch_to_display_ms": 831.7,
+            "clear_to_display_ms": 417.7,
+            "clear_to_sample_ms": 50.7,
+            "sample_to_read_start_ms": 14.93,
+            "read_to_map_result_ms": 180.05,
+            "remaining_to_window_ms": 172.0,
+            "later_failed_registrations": 0,
+            "after_first_latest_failure_ms": null
+          },
+          {
+            "switch_to_display_ms": 694.1,
+            "clear_to_display_ms": 295.0,
+            "clear_to_sample_ms": -15.1,
+            "sample_to_read_start_ms": 20.3,
+            "read_to_map_result_ms": 149.82,
+            "remaining_to_window_ms": 140.0,
+            "later_failed_registrations": 0,
+            "after_first_latest_failure_ms": null
+          },
+          {
+            "switch_to_display_ms": 766.1,
+            "clear_to_display_ms": 352.5,
+            "clear_to_sample_ms": 51.6,
+            "sample_to_read_start_ms": 7.52,
+            "read_to_map_result_ms": 144.77,
+            "remaining_to_window_ms": 148.6,
+            "later_failed_registrations": 0,
+            "after_first_latest_failure_ms": null
+          }
+        ],
+        "median": {
+          "switch_to_display_ms": 766.1,
+          "clear_to_display_ms": 352.5,
+          "clear_to_sample_ms": 50.7,
+          "sample_to_read_start_ms": 14.93,
+          "read_to_map_result_ms": 149.82,
+          "remaining_to_window_ms": 148.6,
+          "later_failed_registrations": 0
+        }
+      }
+    },
+    "256": {
+      "320": {
+        "runs": [
+          {
+            "switch_to_display_ms": 786.3,
+            "clear_to_display_ms": 382.3,
+            "clear_to_sample_ms": 66.5,
+            "sample_to_read_start_ms": 13.64,
+            "read_to_map_result_ms": 168.88,
+            "remaining_to_window_ms": 133.3,
+            "later_failed_registrations": 0,
+            "after_first_latest_failure_ms": null
+          },
+          {
+            "switch_to_display_ms": 760.5,
+            "clear_to_display_ms": 349.0,
+            "clear_to_sample_ms": 48.2,
+            "sample_to_read_start_ms": 23.09,
+            "read_to_map_result_ms": 138.85,
+            "remaining_to_window_ms": 138.9,
+            "later_failed_registrations": 0,
+            "after_first_latest_failure_ms": null
+          },
+          {
+            "switch_to_display_ms": 786.5,
+            "clear_to_display_ms": 376.2,
+            "clear_to_sample_ms": 57.2,
+            "sample_to_read_start_ms": 10.37,
+            "read_to_map_result_ms": 157.02,
+            "remaining_to_window_ms": 151.6,
+            "later_failed_registrations": 0,
+            "after_first_latest_failure_ms": null
+          }
+        ],
+        "median": {
+          "switch_to_display_ms": 786.3,
+          "clear_to_display_ms": 376.2,
+          "clear_to_sample_ms": 57.2,
+          "sample_to_read_start_ms": 13.64,
+          "read_to_map_result_ms": 157.02,
+          "remaining_to_window_ms": 138.9,
+          "later_failed_registrations": 0
+        }
+      },
+      "256": {
+        "runs": [
+          {
+            "switch_to_display_ms": 754.9,
+            "clear_to_display_ms": 348.4,
+            "clear_to_sample_ms": 56.8,
+            "sample_to_read_start_ms": 8.82,
+            "read_to_map_result_ms": 150.58,
+            "remaining_to_window_ms": 132.2,
+            "later_failed_registrations": 0,
+            "after_first_latest_failure_ms": null
+          },
+          {
+            "switch_to_display_ms": 763.1,
+            "clear_to_display_ms": 358.4,
+            "clear_to_sample_ms": 48.0,
+            "sample_to_read_start_ms": 7.53,
+            "read_to_map_result_ms": 167.91,
+            "remaining_to_window_ms": 135.0,
+            "later_failed_registrations": 0,
+            "after_first_latest_failure_ms": null
+          },
+          {
+            "switch_to_display_ms": 812.9,
+            "clear_to_display_ms": 399.6,
+            "clear_to_sample_ms": 90.1,
+            "sample_to_read_start_ms": 23.93,
+            "read_to_map_result_ms": 157.29,
+            "remaining_to_window_ms": 128.3,
+            "later_failed_registrations": 0,
+            "after_first_latest_failure_ms": null
+          }
+        ],
+        "median": {
+          "switch_to_display_ms": 763.1,
+          "clear_to_display_ms": 358.4,
+          "clear_to_sample_ms": 56.8,
+          "sample_to_read_start_ms": 8.82,
+          "read_to_map_result_ms": 157.29,
+          "remaining_to_window_ms": 132.2,
+          "later_failed_registrations": 0
+        }
+      }
+    }
+  },
+  "evidence": {
+    "sparse": {
+      "n": 19,
+      "proposed_maps": 8,
+      "graph_differences": 0,
+      "word_differences": 0,
+      "transcribed_boxes": 392
+    },
+    "transition": {
+      "n": 24,
+      "proposed_maps": 12,
+      "graph_differences": 0,
+      "word_differences": 0,
+      "transcribed_boxes": 354
+    },
+    "native": {
+      "n": 20,
+      "proposed_maps": 0,
+      "graph_differences": 0,
+      "word_differences": 2,
+      "transcribed_boxes": 42
+    }
+  },
+  "correctness": "正式回放探针检查当前区域、唯一布局、当前位置、每个节点的识别类型和来源；连续转场另外对照人工核过的12格及当前位置。其他图比对原探针输出，未逐字做人工标注。两批输入可能重叠。",
+  "ui_profile": "额外一次Qt采样处理剖析显示首次解码一层装饰图约29毫秒；剖析轮时钟不加入窗口对照。",
+  "ui_art": {
+    "ctrl": {
+      "runs": [
+        {
+          "switch_to_display_ms": 727.5,
+          "clear_to_display_ms": 316.5,
+          "clear_to_sample_ms": 36.9,
+          "sample_to_read_start_ms": 9.67,
+          "read_to_map_result_ms": 141.75,
+          "remaining_to_window_ms": 128.2,
+          "later_failed_registrations": 0,
+          "after_first_latest_failure_ms": null
+        },
+        {
+          "switch_to_display_ms": 789.9,
+          "clear_to_display_ms": 381.0,
+          "clear_to_sample_ms": 65.6,
+          "sample_to_read_start_ms": 10.52,
+          "read_to_map_result_ms": 160.1,
+          "remaining_to_window_ms": 144.7,
+          "later_failed_registrations": 0,
+          "after_first_latest_failure_ms": null
+        },
+        {
+          "switch_to_display_ms": 755.2,
+          "clear_to_display_ms": 350.3,
+          "clear_to_sample_ms": 57.3,
+          "sample_to_read_start_ms": 11.27,
+          "read_to_map_result_ms": 147.89,
+          "remaining_to_window_ms": 133.9,
+          "later_failed_registrations": 0,
+          "after_first_latest_failure_ms": null
+        }
+      ],
+      "median": {
+        "switch_to_display_ms": 755.2,
+        "clear_to_display_ms": 350.3,
+        "clear_to_sample_ms": 57.3,
+        "sample_to_read_start_ms": 10.52,
+        "read_to_map_result_ms": 147.89,
+        "remaining_to_window_ms": 133.9,
+        "later_failed_registrations": 0
+      },
+      "first_floor_decode_calls_ms": [
+        [
+          28.93
+        ],
+        [
+          32.73
+        ],
+        [
+          30.95
+        ]
+      ]
+    },
+    "warmart": {
+      "runs": [
+        {
+          "switch_to_display_ms": 792.1,
+          "clear_to_display_ms": 383.1,
+          "clear_to_sample_ms": 44.1,
+          "sample_to_read_start_ms": 24.04,
+          "read_to_map_result_ms": 161.43,
+          "remaining_to_window_ms": 153.5,
+          "later_failed_registrations": 0,
+          "after_first_latest_failure_ms": null
+        },
+        {
+          "switch_to_display_ms": 738.5,
+          "clear_to_display_ms": 334.6,
+          "clear_to_sample_ms": 58.9,
+          "sample_to_read_start_ms": 9.52,
+          "read_to_map_result_ms": 140.94,
+          "remaining_to_window_ms": 125.3,
+          "later_failed_registrations": 0,
+          "after_first_latest_failure_ms": null
+        },
+        {
+          "switch_to_display_ms": 778.9,
+          "clear_to_display_ms": 375.0,
+          "clear_to_sample_ms": 49.2,
+          "sample_to_read_start_ms": 23.05,
+          "read_to_map_result_ms": 152.55,
+          "remaining_to_window_ms": 150.2,
+          "later_failed_registrations": 0,
+          "after_first_latest_failure_ms": null
+        }
+      ],
+      "median": {
+        "switch_to_display_ms": 778.9,
+        "clear_to_display_ms": 375.0,
+        "clear_to_sample_ms": 49.2,
+        "sample_to_read_start_ms": 23.05,
+        "read_to_map_result_ms": 152.55,
+        "remaining_to_window_ms": 150.2,
+        "later_failed_registrations": 0
+      },
+      "first_floor_decode_calls_ms": [
+        [
+          34.01,
+          39.63
+        ],
+        [
+          40.26,
+          33.35
+        ],
+        [
+          38.9,
+          35.87
+        ]
+      ]
+    }
+  },
+  "ring_probe": {
+    "frames": 18,
+    "pair_runs": 72,
+    "warm_mean_ms": [
+      21.57,
+      20.16
+    ],
+    "method": "按已检出圆的半径在当前帧分组计算径向中位数，核对返回圆心与原顺序，全部相同。收益约1毫秒，保留原实现。"
+  },
+  "decision": "保留原320宽及现有窗口缓存策略。256宽在较广样本有两行转写改变，窗口配对不能证明稳定提速。启动预读一层装饰图的三次试验在真正需要时均重解码。地图预读继续限隔离回放，常规及当前测试助手均使用现有产品实现。",
+  "limitations": [
+    "单段独立源录像重复播放，不能估计真实对局P95或点击响应。",
+    "模型交付前已完成编译；测试用额外短宽模型在临时目录缓存。",
+    "本轮64位Windows核显回放，未重新测量藏品页。"
+  ]
+}
