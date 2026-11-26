@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-首次进入密集藏品页及动画地图仍需达到500毫秒。回访需区分已在屏幕中的历史持有卡与当前页新证据。在核显隔离窗口中回访已读页，9件页完整结果绘制中位数由1137变为1075毫秒，14件页由1521变为419毫秒。回访画面不能用这次绘制证明当前两张正确卡首次可见。[回执](verification/maintenance/ocr-crop-cache-return-20261126/summary.json)。
+首次进入密集藏品页和动画地图仍需在500毫秒内显示正确内容。核显藏品页长行转录仍占关键时间，回访时仍需区分历史持有卡与当前证据。[本轮对照](verification/maintenance/ocr-wide-queue-20261126/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 
