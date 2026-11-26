@@ -97,6 +97,58 @@ class TextRowReuseTests(unittest.TestCase):
         self.assertEqual(actual[2][2],.504)
         self.assertEqual(p.detection_calls,2)
 
+    def test_gpu_cache_keeps_native_slot_and_invalidates_changed_preprocessing(self):
+        from unittest.mock import patch
+        from rouge.ocr_cpu_inference import FixedShapeGPU
+
+        reader, provider = self.reader()
+        rec = provider.text_rec
+        infer = rec.session
+        rec.session = FixedShapeGPU.__new__(FixedShapeGPU)
+        frame = np.zeros((50, 120, 3), np.uint8)
+        with patch.object(FixedShapeGPU, '__call__', lambda device, tensor: infer(tensor)):
+            before, _ = reader(frame)
+            provider.crops[2][:] = 67
+            rec.calls.clear()
+            updated, _ = reader(frame)
+            self.assertEqual(reader.metrics['reused_text_rows'], 4)
+            self.assertEqual(len(rec.calls), 1)
+            self.assertEqual(rec.calls[0].shape, (2, 3, 4, 16))
+            self.assertTrue(np.all(rec.calls[0][0] == 67))
+            self.assertFalse(rec.calls[0][1].any())
+            self.assertEqual(updated[2][1], '67')
+            self.assertEqual(updated[0], before[0])
+            resize = rec.resize_norm_img
+            rec.resize_norm_img = lambda crop, ratio: resize(crop, ratio) + 1
+            changed, _ = reader(frame)
+            self.assertEqual(reader.metrics['reused_text_rows'], 0)
+            self.assertEqual(changed[2][1], '68')
+
+    def test_gpu_reuses_two_pages_within_the_crop_byte_budget(self):
+        from unittest.mock import patch
+        from rouge.ocr_cpu_inference import FixedShapeGPU
+
+        reader, provider = self.reader()
+        reader.max_bytes = 2 * sum(crop.nbytes for crop in provider.crops)
+        rec = provider.text_rec
+        rec.rec_image_shape = (3, 48, 320)
+        rec.resize_norm_img = lambda crop, ratio: np.full(
+            (3, 48, int(48 * ratio)), crop[0, 0, 0], np.float32)
+        infer = rec.session
+        rec.session = FixedShapeGPU.__new__(FixedShapeGPU)
+        frame = np.zeros((50, 120, 3), np.uint8)
+        with patch.object(FixedShapeGPU, '__call__', lambda device, tensor: infer(tensor)):
+            original = provider.crops
+            first, _ = reader(frame)
+            provider.crops = [crop + 20 for crop in original]
+            second, _ = reader(frame)
+            self.assertNotEqual(first, second)
+            provider.crops = original
+            again, _ = reader(frame)
+            self.assertEqual(again, first)
+            self.assertEqual(reader.metrics['inferred_text_rows'], 0)
+            self.assertEqual(reader.metrics['cache_bytes'], reader.max_bytes)
+
     def test_only_model_input_equivalence_allows_changed_raw_crop_reuse(self):
         reader,p=self.reader();frame=np.zeros((50,120,3),np.uint8)
         first,_=reader(frame)

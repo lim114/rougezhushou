@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-核显测试助手保留原CPU定分。三轮隔离窗口，9件页整页中位数由5700变为4509毫秒，14件页由4982变为2837毫秒。两张可见卡首显及动画地图仍待稳定低于500毫秒。下一步需缩短当前画面的文字与页面确认时间并验收游戏同跑。[回执](verification/maintenance/dense-inventory-icon-screen-20261126/summary.json)。
+首次进入密集藏品页及动画地图仍需达到500毫秒。回访需区分已在屏幕中的历史持有卡与当前页新证据。在核显隔离窗口中回访已读页，9件页完整结果绘制中位数由1137变为1075毫秒，14件页由1521变为419毫秒。回访画面不能用这次绘制证明当前两张正确卡首次可见。[回执](verification/maintenance/ocr-crop-cache-return-20261126/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 

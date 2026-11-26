@@ -19,6 +19,7 @@ import time
 import numpy as np
 
 from .dynamic_ocr import bounds, normalize_regions, positive_overlap
+from .ocr_cpu_inference import FixedShapeGPU
 from .recognition_cache import CachedOCR
 from .recognition_priority import yield_to_current
 from .page_detection import detector_input, detect_boxes
@@ -64,6 +65,43 @@ class _TextRows:
         values = recognizer.postprocess_op(predictions, False,
             wh_ratio_list=[self.ratios[i] for i in missing], max_wh_ratio=self.maximum)
         return values, elapsed
+
+
+class _GPUCropRows:
+    """Keep exact current crop bytes before FP32 normalization and batch padding."""
+
+    def __init__(self, recognizer, crops):
+        self.crops = crops
+        self.ratios = [crop.shape[1] / float(crop.shape[0]) for crop in crops]
+        _, height, width = recognizer.rec_image_shape
+        self.maximum = max(width / height, *self.ratios)
+        self.keys = [
+            ('gpu_crop', crop.shape, crop.dtype.str, self.maximum, len(crops), i, crop.tobytes())
+            for i, crop in enumerate(crops)
+        ]
+
+    def recognize(self, recognizer, missing):
+        # Preserve the original batch size and slot. Reducing a fixed-width
+        # GPU batch to one line would route that line to a different FP32
+        # device. Independent blank slots require no normalization or decode.
+        channels, height, _ = recognizer.rec_image_shape
+        inputs = np.zeros((len(self.crops), channels, height, int(height * self.maximum)), np.float32)
+        for i in missing:
+            inputs[i] = recognizer.resize_norm_img(self.crops[i], self.maximum)
+        started = time.perf_counter()
+        predictions = recognizer.session(inputs)[0]
+        elapsed = time.perf_counter() - started
+        if len(missing) != len(self.crops):
+            predictions = predictions[missing]
+        values = recognizer.postprocess_op(predictions, False,
+            wh_ratio_list=[self.ratios[i] for i in missing], max_wh_ratio=self.maximum)
+        return values, elapsed
+
+
+def _prepare_rows(recognizer, crops):
+    if type(recognizer.session) is FixedShapeGPU:
+        return _GPUCropRows(recognizer, crops)
+    return _TextRows(recognizer, crops)
 
 
 class PageOCR:
@@ -138,6 +176,7 @@ class PageOCR:
         p = self.provider
         r = p.text_rec
         return (id(p), id(r), _callable_identity(r.session), _callable_identity(r.postprocess_op),
+                _callable_identity(r.resize_norm_img),
                 int(r.rec_batch_num), tuple(r.rec_image_shape), float(p.text_score),
                 bool(p.use_cls), _callable_identity(p.text_cls), float(p.max_side_len),
                 float(p.min_side_len), float(p.min_height), float(p.width_height_ratio))
@@ -177,7 +216,6 @@ class PageOCR:
         return result, elapsed, False
 
     def _prepare_wide_batch(self, work, batches, crops, ratios, force_discovery):
-        from .ocr_cpu_inference import FixedShapeGPU
         rec = self.provider.text_rec
         if not self.reuse_text_rows or not self.cache_enabled or not isinstance(rec.session, FixedShapeGPU):
             return None, None
@@ -195,7 +233,7 @@ class PageOCR:
             return None, None
         _, index = max(candidates)
         batch = batches[index]
-        rows = _TextRows(rec, [crops[i] for i in batch])
+        rows = _prepare_rows(rec, [crops[i] for i in batch])
         missing = [i for i, key in enumerate(rows.keys) if force_discovery or key not in self._cache]
         if not missing:
             return None, None
@@ -210,7 +248,7 @@ class PageOCR:
         current detector boxes and classifier transforms are never cached here.
         """
         r=self.provider.text_rec
-        rows = prepared[0] if prepared is not None else _TextRows(r, crops)
+        rows = prepared[0] if prepared is not None else _prepare_rows(r, crops)
         keys = rows.keys
         records=[None]*len(crops) if force_discovery else [self._cache.get(key) for key in keys]
         missing=[i for i,entry in enumerate(records) if entry is None]

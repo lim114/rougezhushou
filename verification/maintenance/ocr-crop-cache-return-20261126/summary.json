@@ -1,0 +1,433 @@
+{
+  "title": "核显识别按原始文字裁片复用转录结果",
+  "summary": "在核显隔离窗口中回访已读页，9件页完整结果绘制中位数由1137变为1075毫秒，14件页由1521变为419毫秒。回访画面不能用这次绘制证明当前两张正确卡首次可见。",
+  "implementation": "保留完整画面的检测和原有归一化、字典、解码与阈值。核显读者在同一预处理上下文按当前裁片的完整字节、尺寸、数据类型、原组宽度和批次位置复用，失配用原批次尺寸在原位置重读。常规CPU仍用归一化行缓存。",
+  "base_commit": "b288d6c25ce148dfd796a5ef125201d74d2863c7",
+  "source_images_checked": 20,
+  "source_observations_and_early_names_equal": true,
+  "unit_tests": {
+    "tests": 158,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "modules": [
+      "test_ocr_text_row_reuse",
+      "test_page_ocr_056",
+      "test_page_ocr_058",
+      "test_page_ocr_seed_bridge",
+      "test_ocr_cache_review",
+      "test_ocr_cpu_backend",
+      "test_settling_detection",
+      "test_sampling_flow",
+      "test_held_icon_gpu",
+      "test_held_cards_054",
+      "test_held_integration_054"
+    ]
+  },
+  "native_window": {
+    "relaunched": true,
+    "gpu_ocr": true,
+    "visible": true,
+    "responding": true,
+    "private_unchanged": true
+  },
+  "return_window": {
+    "A": {
+      "base": {
+        "runs": [
+          {
+            "read_ms": 611.61,
+            "queue_ms": 137.14,
+            "full_qt_ms": 926.33,
+            "reused_rows": 0,
+            "inferred_rows": 67,
+            "visibility": "目标卡片在最终可见区域以外",
+            "early_banner_paint_ms": null
+          },
+          {
+            "read_ms": 1032.92,
+            "queue_ms": 133.13,
+            "full_qt_ms": 1323.32,
+            "reused_rows": 0,
+            "inferred_rows": 67,
+            "visibility": "目标卡片在最终可见区域以外",
+            "early_banner_paint_ms": null
+          },
+          {
+            "read_ms": 843.97,
+            "queue_ms": 136.62,
+            "full_qt_ms": 1137.44,
+            "reused_rows": 0,
+            "inferred_rows": 67,
+            "visibility": "目标卡片在最终可见区域以外",
+            "early_banner_paint_ms": null
+          }
+        ],
+        "median": {
+          "read_ms": 843.97,
+          "queue_ms": 136.62,
+          "full_qt_ms": 1137.44,
+          "reused_rows": 0,
+          "inferred_rows": 67
+        }
+      },
+      "compact": {
+        "runs": [
+          {
+            "read_ms": 747.36,
+            "queue_ms": 134.52,
+            "full_qt_ms": 1074.64,
+            "reused_rows": 14,
+            "inferred_rows": 53,
+            "visibility": "目标卡片在最终可见区域以外",
+            "early_banner_paint_ms": null
+          },
+          {
+            "read_ms": 933.79,
+            "queue_ms": 143.84,
+            "full_qt_ms": 1272.54,
+            "reused_rows": 14,
+            "inferred_rows": 53,
+            "visibility": "目标卡片在最终可见区域以外",
+            "early_banner_paint_ms": null
+          },
+          {
+            "read_ms": 766.97,
+            "queue_ms": 128.72,
+            "full_qt_ms": 1049.65,
+            "reused_rows": 14,
+            "inferred_rows": 53,
+            "visibility": "目标卡片在最终可见区域以外",
+            "early_banner_paint_ms": null
+          }
+        ],
+        "median": {
+          "read_ms": 766.97,
+          "queue_ms": 134.52,
+          "full_qt_ms": 1074.64,
+          "reused_rows": 14,
+          "inferred_rows": 53
+        }
+      }
+    },
+    "B": {
+      "base": {
+        "runs": [
+          {
+            "read_ms": 961.36,
+            "queue_ms": 147.74,
+            "full_qt_ms": 1297.12,
+            "reused_rows": 0,
+            "inferred_rows": 81,
+            "visibility": "参考卡片在切换前已显示",
+            "early_banner_paint_ms": null
+          },
+          {
+            "read_ms": 1247.31,
+            "queue_ms": 143.56,
+            "full_qt_ms": 1560.81,
+            "reused_rows": 0,
+            "inferred_rows": 81,
+            "visibility": "参考卡片在切换前已显示",
+            "early_banner_paint_ms": null
+          },
+          {
+            "read_ms": 1168.31,
+            "queue_ms": 146.3,
+            "full_qt_ms": 1521.21,
+            "reused_rows": 0,
+            "inferred_rows": 81,
+            "visibility": "参考卡片在切换前已显示",
+            "early_banner_paint_ms": null
+          }
+        ],
+        "median": {
+          "read_ms": 1168.31,
+          "queue_ms": 146.3,
+          "full_qt_ms": 1521.21,
+          "reused_rows": 0,
+          "inferred_rows": 81
+        }
+      },
+      "compact": {
+        "runs": [
+          {
+            "read_ms": 138.87,
+            "queue_ms": 136.47,
+            "full_qt_ms": 424.39,
+            "reused_rows": 81,
+            "inferred_rows": 0,
+            "visibility": "参考卡片在切换前已显示",
+            "early_banner_paint_ms": null
+          },
+          {
+            "read_ms": 110.67,
+            "queue_ms": 146.35,
+            "full_qt_ms": 418.8,
+            "reused_rows": 81,
+            "inferred_rows": 0,
+            "visibility": "参考卡片在切换前已显示",
+            "early_banner_paint_ms": null
+          },
+          {
+            "read_ms": 144.07,
+            "queue_ms": 133.15,
+            "full_qt_ms": 406.94,
+            "reused_rows": 81,
+            "inferred_rows": 0,
+            "visibility": "参考卡片在切换前已显示",
+            "early_banner_paint_ms": null
+          }
+        ],
+        "median": {
+          "read_ms": 138.87,
+          "queue_ms": 136.47,
+          "full_qt_ms": 418.8,
+          "reused_rows": 81,
+          "inferred_rows": 0
+        }
+      }
+    }
+  },
+  "first_visit_windows": {
+    "A": {
+      "base": {
+        "runs": [
+          {
+            "read_ms": 1498.19,
+            "queue_ms": 143.03,
+            "full_qt_ms": 1811.38,
+            "reused_rows": 0,
+            "inferred_rows": 68,
+            "first_correct_ms": 862.95,
+            "full_visible_ms": 1843.69
+          },
+          {
+            "read_ms": 2150.04,
+            "queue_ms": 142.72,
+            "full_qt_ms": 2434.5,
+            "reused_rows": 0,
+            "inferred_rows": 68,
+            "first_correct_ms": 1300.71,
+            "full_visible_ms": 2457.1
+          }
+        ],
+        "median": {
+          "read_ms": 1824.12,
+          "queue_ms": 142.88,
+          "full_qt_ms": 2122.94,
+          "reused_rows": 0.0,
+          "inferred_rows": 68.0,
+          "first_correct_ms": 1081.83,
+          "full_visible_ms": 2150.39
+        }
+      },
+      "compact": {
+        "runs": [
+          {
+            "read_ms": 1759.04,
+            "queue_ms": 135.55,
+            "full_qt_ms": 2084.44,
+            "reused_rows": 0,
+            "inferred_rows": 68,
+            "first_correct_ms": 1081.63,
+            "full_visible_ms": 2118.67
+          },
+          {
+            "read_ms": 1754.42,
+            "queue_ms": 144.92,
+            "full_qt_ms": 2077.39,
+            "reused_rows": 0,
+            "inferred_rows": 68,
+            "first_correct_ms": 1188.51,
+            "full_visible_ms": 2105.02
+          }
+        ],
+        "median": {
+          "read_ms": 1756.73,
+          "queue_ms": 140.24,
+          "full_qt_ms": 2080.91,
+          "reused_rows": 0.0,
+          "inferred_rows": 68.0,
+          "first_correct_ms": 1135.07,
+          "full_visible_ms": 2111.85
+        }
+      }
+    },
+    "B": {
+      "base": {
+        "runs": [
+          {
+            "read_ms": 1425.78,
+            "queue_ms": 133.03,
+            "full_qt_ms": 1738.09,
+            "reused_rows": 0,
+            "inferred_rows": 81,
+            "first_correct_ms": 1349.79,
+            "full_visible_ms": 1770.86
+          },
+          {
+            "read_ms": 1409.97,
+            "queue_ms": 148.51,
+            "full_qt_ms": 1754.8,
+            "reused_rows": 0,
+            "inferred_rows": 81,
+            "first_correct_ms": 1290.15,
+            "full_visible_ms": 1798.34
+          }
+        ],
+        "median": {
+          "read_ms": 1417.88,
+          "queue_ms": 140.77,
+          "full_qt_ms": 1746.44,
+          "reused_rows": 0.0,
+          "inferred_rows": 81.0,
+          "first_correct_ms": 1319.97,
+          "full_visible_ms": 1784.6
+        }
+      },
+      "compact": {
+        "runs": [
+          {
+            "read_ms": 1189.48,
+            "queue_ms": 138.14,
+            "full_qt_ms": 1492.7,
+            "reused_rows": 0,
+            "inferred_rows": 81,
+            "first_correct_ms": 1106.42,
+            "full_visible_ms": 1522.53
+          },
+          {
+            "read_ms": 1395.7,
+            "queue_ms": 140.39,
+            "full_qt_ms": 1716.01,
+            "reused_rows": 0,
+            "inferred_rows": 81,
+            "first_correct_ms": 1246.07,
+            "full_visible_ms": 1745.51
+          }
+        ],
+        "median": {
+          "read_ms": 1292.59,
+          "queue_ms": 139.26,
+          "full_qt_ms": 1604.36,
+          "reused_rows": 0.0,
+          "inferred_rows": 81.0,
+          "first_correct_ms": 1176.24,
+          "full_visible_ms": 1634.02
+        }
+      }
+    },
+    "map": {
+      "base": {
+        "runs": [
+          {
+            "first_correct_ms": 2118.12,
+            "later_bad": 0,
+            "same_config_values": true,
+            "same_reuse_source": true
+          },
+          {
+            "first_correct_ms": 847.31,
+            "later_bad": 0,
+            "same_config_values": true,
+            "same_reuse_source": true
+          }
+        ],
+        "median": {
+          "first_correct_ms": 1482.71,
+          "later_bad": 0.0
+        }
+      },
+      "compact": {
+        "runs": [
+          {
+            "first_correct_ms": 1025.81,
+            "later_bad": 0,
+            "same_config_values": true,
+            "same_reuse_source": false
+          },
+          {
+            "first_correct_ms": 852.83,
+            "later_bad": 0,
+            "same_config_values": true,
+            "same_reuse_source": true
+          }
+        ],
+        "median": {
+          "first_correct_ms": 939.32,
+          "later_bad": 0.0
+        }
+      }
+    }
+  },
+  "repeat_ocr_only": {
+    "stock": {
+      "repeat_median_ms": 1014.11,
+      "peak_resident_key_bytes": 25002432,
+      "reused_rows": 0,
+      "inferred_rows": 596
+    },
+    "compact": {
+      "repeat_median_ms": 202.33,
+      "peak_resident_key_bytes": 2433186,
+      "reused_rows": 594,
+      "inferred_rows": 2
+    }
+  },
+  "private_files_unchanged": true,
+  "method": [
+    "9件与14件分别指当前画面按文字确认的卡数。每组使用同一核显OCR和图标筛选，基线仅切回上一版行缓存。",
+    "隔离Windows窗口先展示一张密集藏品页，再展示另一张，最后返回第一张并改变角落一小块像素。完成绘制由Qt事件确认，另用窗口捕获尝试核对目标像素。",
+    "首次进入各两轮，每轮两张目标卡从窗口像素核对；地图从动画首个变化到12个节点和当前位置像素正确另计。",
+    "交替测试两种实现。藏品页逐轮比较完整观测，剔除计时与采样元数据。动画地图另核对当前节点、位置和配置；配置值比较排除采集时刻、徽标取样、复用标注，另记录两组是否均从本局复用。纯OCR测试用两张交替的原图，每次回访仅改变6乘5像素。"
+  ],
+  "alternatives": {
+    "partial_overlay": {
+      "other_card_cases": 18,
+      "extra_early_names": 0,
+      "shop_veto_counterexamples": 2
+    },
+    "variable_gpu_width": {
+      "model_compile_ms": 25406.65,
+      "paired_widths": 12,
+      "rounds_recorded": 2,
+      "first_round_gpu_ms": 67688.52,
+      "first_round_base_ms": 2535.35,
+      "stopped_early": true
+    },
+    "no_output_copy": {
+      "A": {
+        "base": {
+          "first_visible_ms": 1157.72,
+          "outputs_equal": true
+        },
+        "shared": {
+          "first_visible_ms": 1133.01,
+          "outputs_equal": true
+        }
+      },
+      "B": {
+        "base": {
+          "first_visible_ms": 1261.39,
+          "outputs_equal": true
+        },
+        "shared": {
+          "first_visible_ms": 1334.13,
+          "outputs_equal": true
+        }
+      }
+    },
+    "compressed_normalized_keys_repeat_ms": 464.51,
+    "partial_batch_trial": {
+      "source": "同一两页交替的24次纯OCR对照",
+      "failed_raw_output_checks": 4,
+      "shipped_raw_output_checks_failed": 0
+    }
+  },
+  "limits": [
+    "本轮没有游戏同跑。两张密集正页来自同一来源。",
+    "回访时本局持有列表已经包括此前识别到的物品。此前已显示或不在可见范围的卡片不作为首显计时证据。",
+    "首次进入的窗口结果包含模型热身，不能说明启动后首次模型编译时间。"
+  ]
+}
