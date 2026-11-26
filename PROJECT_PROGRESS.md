@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-首次进入密集藏品页和动画地图仍需在500毫秒内显示正确内容。核显藏品页长行转录仍占关键时间，回访时仍需区分历史持有卡与当前证据。[本轮对照](verification/maintenance/ocr-wide-queue-20261126/summary.json)。
+首次切到密集藏品和动画地图的正确首显仍需达到500毫秒。藏品提前显示须核对当前页归属、完整卡名和用途，并区分以前已显示的持有卡。[全屏控件与首显对照](verification/maintenance/inventory-global-control-ocr-20261126/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 

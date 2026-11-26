@@ -1,0 +1,867 @@
+{
+  "title": "藏品页用全屏中文读字排查遮挡并预读当前卡片",
+  "summary": "核显隔离窗口各三轮。并行读卡片及全屏控件，两张正确卡片首显中位数在9件页由1732变为928毫秒，14件页由1935变为930毫秒。全屏读字在20个模拟控件样本中漏拦7个，短文字拼图在12个独立变体中漏拦9个，两种实验均未启用。",
+  "base_commit": "0751f1f94959845d97bd33e1b69f63041980dfdb",
+  "implementation_changed": false,
+  "acceptance_complete": false,
+  "target_ms": 500,
+  "method": [
+    "同一幅像素同时送入原模型的三列卡行及页脚预读、以及本机Windows简体中文OCR的720像素高全屏灰度读取。出现商店用词、干员组合控件或独立收藏品标题时，抑制提前输出。原模型接管整页终判。",
+    "隔离窗口回放两张藏品来源图，交替比较两臂各三轮。从显示来源图到首次捕获助手两张正确卡片像素。整页另测完成绘制后的匹配帧；每轮复核有无触发、目标卡身份、完整观测及私人文件。",
+    "Windows模型及长驻本机进程在窗口启动时创建。每个进程第一次请求发生在本轮预读。原整页模型预热。窗口读字耗时包含缩放、内存传输、原生识别及本机返回。",
+    "单独预筛的51个图像尺寸组合使用彩色图测试Windows模型。小控件试验和窗口使用实际灰度输入、720像素高与内存传输，分别计数。"
+  ],
+  "long_line_profile": {
+    "backend": "OpenVINO FP32 CPU, four threads, one stream",
+    "batches": 12,
+    "decoded_results_match": 12,
+    "per_scene": [
+      {
+        "scene": 0,
+        "infer_ms": 612.36,
+        "decode_ms": 9.32
+      },
+      {
+        "scene": 1,
+        "infer_ms": 806.74,
+        "decode_ms": 11.74
+      }
+    ],
+    "reported_native_op_ms": {
+      "Convolution": 885.48,
+      "GroupConvolution": 199.01,
+      "FullyConnected": 63.74,
+      "Softmax": 19.66,
+      "Multiply": 7.68,
+      "Subgraph": 7.16,
+      "ReduceMean": 6.19,
+      "Reorder": 4.09,
+      "Transpose": 2.18,
+      "AvgPool": 1.79,
+      "MVN": 0.96,
+      "MulAdd": 0.78,
+      "PowerStatic": 0.7,
+      "Concat": 0.61,
+      "Add": 0.54,
+      "HardSigmoid": 0.18,
+      "Reshape": 0.07,
+      "Squeeze": 0.04,
+      "VariadicSplit": 0.01
+    },
+    "note": "每个实际长行批次用独立推理请求热身再计时。OpenVINO的原生算子计数仅供定位，不等同切页时间。"
+  },
+  "window": {
+    "A": {
+      "base": {
+        "runs": [
+          {
+            "first_ms": 1719.78,
+            "whole_ms": 4541.67,
+            "capture_ms": 67.03,
+            "queue_ms": 153.56
+          },
+          {
+            "first_ms": 1731.65,
+            "whole_ms": 3352.65,
+            "capture_ms": 54.17,
+            "queue_ms": 146.18
+          },
+          {
+            "first_ms": 2063.85,
+            "whole_ms": 4031.03,
+            "capture_ms": 84.23,
+            "queue_ms": 154.08
+          }
+        ],
+        "median": {
+          "first_ms": 1731.65,
+          "whole_ms": 4031.03,
+          "capture_ms": 67.03,
+          "queue_ms": 153.56
+        },
+        "under_500": 0
+      },
+      "prefetch": {
+        "runs": [
+          {
+            "first_ms": 1460.09,
+            "whole_ms": 5143.55,
+            "capture_ms": 72.01,
+            "queue_ms": 164.9,
+            "local_row_ms": 788.43,
+            "native_ocr_roundtrip_ms": 1183.4,
+            "overlapped_work_ms": 1185.12
+          },
+          {
+            "first_ms": 927.68,
+            "whole_ms": 4666.15,
+            "capture_ms": 49.77,
+            "queue_ms": 156.51,
+            "local_row_ms": 581.13,
+            "native_ocr_roundtrip_ms": 740.65,
+            "overlapped_work_ms": 741.79
+          },
+          {
+            "first_ms": 855.88,
+            "whole_ms": 5194.3,
+            "capture_ms": 65.95,
+            "queue_ms": 149.95,
+            "local_row_ms": 414.45,
+            "native_ocr_roundtrip_ms": 672.86,
+            "overlapped_work_ms": 673.92
+          }
+        ],
+        "median": {
+          "first_ms": 927.68,
+          "whole_ms": 5143.55,
+          "capture_ms": 65.95,
+          "queue_ms": 156.51,
+          "local_row_ms": 581.13,
+          "native_ocr_roundtrip_ms": 740.65,
+          "overlapped_work_ms": 741.79
+        },
+        "under_500": 0
+      }
+    },
+    "B": {
+      "base": {
+        "runs": [
+          {
+            "first_ms": 1935.22,
+            "whole_ms": 2618.51,
+            "capture_ms": 66.16,
+            "queue_ms": 142.94
+          },
+          {
+            "first_ms": 1771.6,
+            "whole_ms": 2497.75,
+            "capture_ms": 48.68,
+            "queue_ms": 140.64
+          },
+          {
+            "first_ms": 2776.53,
+            "whole_ms": 4043.18,
+            "capture_ms": 78.54,
+            "queue_ms": 153.02
+          }
+        ],
+        "median": {
+          "first_ms": 1935.22,
+          "whole_ms": 2618.51,
+          "capture_ms": 66.16,
+          "queue_ms": 142.94
+        },
+        "under_500": 0
+      },
+      "prefetch": {
+        "runs": [
+          {
+            "first_ms": 929.57,
+            "whole_ms": 3337.41,
+            "capture_ms": 58.56,
+            "queue_ms": 141.79,
+            "local_row_ms": 645.41,
+            "native_ocr_roundtrip_ms": 745.93,
+            "overlapped_work_ms": 747.2
+          },
+          {
+            "first_ms": 1023.63,
+            "whole_ms": 5180.46,
+            "capture_ms": 41.64,
+            "queue_ms": 151.07,
+            "local_row_ms": 614.95,
+            "native_ocr_roundtrip_ms": 853.98,
+            "overlapped_work_ms": 855.21
+          },
+          {
+            "first_ms": 684.18,
+            "whole_ms": 2639.48,
+            "capture_ms": 34.35,
+            "queue_ms": 144.13,
+            "local_row_ms": 559.82,
+            "native_ocr_roundtrip_ms": 557.49,
+            "overlapped_work_ms": 561.19
+          }
+        ],
+        "median": {
+          "first_ms": 929.57,
+          "whole_ms": 3337.41,
+          "capture_ms": 41.64,
+          "queue_ms": 144.13,
+          "local_row_ms": 614.95,
+          "native_ocr_roundtrip_ms": 745.93,
+          "overlapped_work_ms": 747.2
+        },
+        "under_500": 0
+      }
+    }
+  },
+  "narrow_tiles_window": {
+    "A": {
+      "base": {
+        "runs": [
+          {
+            "first_ms": 1547.4,
+            "whole_ms": 3294.14,
+            "capture_ms": 58.71,
+            "queue_ms": 145.49
+          },
+          {
+            "first_ms": 2672.93,
+            "whole_ms": 5555.24,
+            "capture_ms": 58.14,
+            "queue_ms": 160.2
+          }
+        ],
+        "median": {
+          "first_ms": 2110.16,
+          "whole_ms": 4424.69,
+          "capture_ms": 58.42,
+          "queue_ms": 152.84
+        },
+        "under_500": 0
+      },
+      "prefetch": {
+        "runs": [
+          {
+            "first_ms": 1009.94,
+            "whole_ms": 5492.77,
+            "capture_ms": 60.81,
+            "queue_ms": 151.63,
+            "local_row_ms": 598.28,
+            "native_ocr_roundtrip_ms": 685.6,
+            "overlapped_work_ms": 746.96
+          },
+          {
+            "first_ms": 696.17,
+            "whole_ms": 4380.96,
+            "capture_ms": 54.55,
+            "queue_ms": 140.28,
+            "local_row_ms": 415.69,
+            "native_ocr_roundtrip_ms": 479.99,
+            "overlapped_work_ms": 517.41
+          }
+        ],
+        "median": {
+          "first_ms": 853.06,
+          "whole_ms": 4936.86,
+          "capture_ms": 57.68,
+          "queue_ms": 145.95,
+          "local_row_ms": 506.99,
+          "native_ocr_roundtrip_ms": 582.8,
+          "overlapped_work_ms": 632.18
+        },
+        "under_500": 0
+      }
+    },
+    "B": {
+      "base": {
+        "runs": [
+          {
+            "first_ms": 2172.66,
+            "whole_ms": 3214.51,
+            "capture_ms": 56.47,
+            "queue_ms": 153.46
+          },
+          {
+            "first_ms": 1915.47,
+            "whole_ms": 2916.29,
+            "capture_ms": 66.42,
+            "queue_ms": 139.71
+          }
+        ],
+        "median": {
+          "first_ms": 2044.07,
+          "whole_ms": 3065.4,
+          "capture_ms": 61.45,
+          "queue_ms": 146.59
+        },
+        "under_500": 0
+      },
+      "prefetch": {
+        "runs": [
+          {
+            "first_ms": 1054.26,
+            "whole_ms": 4246.99,
+            "capture_ms": 58.57,
+            "queue_ms": 153.69,
+            "local_row_ms": 805.1,
+            "native_ocr_roundtrip_ms": 703.97,
+            "overlapped_work_ms": 807.11
+          },
+          {
+            "first_ms": 923.01,
+            "whole_ms": 3983.55,
+            "capture_ms": 68.5,
+            "queue_ms": 86.74,
+            "local_row_ms": 645.12,
+            "native_ocr_roundtrip_ms": 609.01,
+            "overlapped_work_ms": 678.94
+          }
+        ],
+        "median": {
+          "first_ms": 988.63,
+          "whole_ms": 4115.27,
+          "capture_ms": 63.53,
+          "queue_ms": 120.22,
+          "local_row_ms": 725.11,
+          "native_ocr_roundtrip_ms": 656.49,
+          "overlapped_work_ms": 743.03
+        },
+        "under_500": 0
+      }
+    }
+  },
+  "control_crop_study": {
+    "whole_native_size": {
+      "controls_blocked": 18,
+      "controls_tested": 20,
+      "median_ms": 726.14
+    },
+    "narrow_tiles": {
+      "controls_blocked": 20,
+      "controls_tested": 20,
+      "median_ms": 159.54
+    },
+    "all_tiles": {
+      "controls_blocked": 20,
+      "controls_tested": 20,
+      "median_ms": 484.11
+    }
+  },
+  "heldout_variants": {
+    "total": 12,
+    "narrow_proposed_wrong": 9,
+    "whole_720_proposed_wrong": 3,
+    "cases": [
+      {
+        "source": 0,
+        "size": 18,
+        "kind": "sentences",
+        "exact_input": true,
+        "candidate_count": 3,
+        "full_count": 0,
+        "full_page": "run_relics",
+        "shop_confirmed": true,
+        "short_veto": false,
+        "native_veto": true,
+        "short_extra": 3,
+        "native_extra": 0
+      },
+      {
+        "source": 0,
+        "size": 18,
+        "kind": "dark_roster",
+        "exact_input": true,
+        "candidate_count": 3,
+        "full_count": 0,
+        "full_page": "run_roster",
+        "shop_confirmed": false,
+        "short_veto": false,
+        "native_veto": false,
+        "short_extra": 3,
+        "native_extra": 3
+      },
+      {
+        "source": 0,
+        "size": 18,
+        "kind": "dark_shop",
+        "exact_input": true,
+        "candidate_count": 3,
+        "full_count": 0,
+        "full_page": "run_relics",
+        "shop_confirmed": true,
+        "short_veto": true,
+        "native_veto": false,
+        "short_extra": 0,
+        "native_extra": 3
+      },
+      {
+        "source": 0,
+        "size": 27,
+        "kind": "sentences",
+        "exact_input": true,
+        "candidate_count": 3,
+        "full_count": 0,
+        "full_page": "run_relics",
+        "shop_confirmed": true,
+        "short_veto": false,
+        "native_veto": true,
+        "short_extra": 3,
+        "native_extra": 0
+      },
+      {
+        "source": 0,
+        "size": 27,
+        "kind": "dark_roster",
+        "exact_input": true,
+        "candidate_count": 3,
+        "full_count": 0,
+        "full_page": "run_roster",
+        "shop_confirmed": false,
+        "short_veto": false,
+        "native_veto": true,
+        "short_extra": 3,
+        "native_extra": 0
+      },
+      {
+        "source": 0,
+        "size": 27,
+        "kind": "dark_shop",
+        "exact_input": true,
+        "candidate_count": 3,
+        "full_count": 0,
+        "full_page": "run_relics",
+        "shop_confirmed": true,
+        "short_veto": true,
+        "native_veto": true,
+        "short_extra": 0,
+        "native_extra": 0
+      },
+      {
+        "source": 1,
+        "size": 18,
+        "kind": "sentences",
+        "exact_input": true,
+        "candidate_count": 3,
+        "full_count": 0,
+        "full_page": "run_relics",
+        "shop_confirmed": true,
+        "short_veto": false,
+        "native_veto": true,
+        "short_extra": 3,
+        "native_extra": 0
+      },
+      {
+        "source": 1,
+        "size": 18,
+        "kind": "dark_roster",
+        "exact_input": true,
+        "candidate_count": 3,
+        "full_count": 0,
+        "full_page": "run_roster",
+        "shop_confirmed": false,
+        "short_veto": false,
+        "native_veto": true,
+        "short_extra": 3,
+        "native_extra": 0
+      },
+      {
+        "source": 1,
+        "size": 18,
+        "kind": "dark_shop",
+        "exact_input": true,
+        "candidate_count": 3,
+        "full_count": 0,
+        "full_page": "run_relics",
+        "shop_confirmed": true,
+        "short_veto": false,
+        "native_veto": false,
+        "short_extra": 3,
+        "native_extra": 3
+      },
+      {
+        "source": 1,
+        "size": 27,
+        "kind": "sentences",
+        "exact_input": true,
+        "candidate_count": 3,
+        "full_count": 0,
+        "full_page": "run_relics",
+        "shop_confirmed": true,
+        "short_veto": false,
+        "native_veto": true,
+        "short_extra": 3,
+        "native_extra": 0
+      },
+      {
+        "source": 1,
+        "size": 27,
+        "kind": "dark_roster",
+        "exact_input": true,
+        "candidate_count": 3,
+        "full_count": 0,
+        "full_page": "run_roster",
+        "shop_confirmed": false,
+        "short_veto": false,
+        "native_veto": true,
+        "short_extra": 3,
+        "native_extra": 0
+      },
+      {
+        "source": 1,
+        "size": 27,
+        "kind": "dark_shop",
+        "exact_input": true,
+        "candidate_count": 3,
+        "full_count": 0,
+        "full_page": "run_relics",
+        "shop_confirmed": true,
+        "short_veto": true,
+        "native_veto": true,
+        "short_extra": 0,
+        "native_extra": 0
+      }
+    ]
+  },
+  "narrow_tile_method": "以原尺寸提取亮色小字连通区域，仅将宽度不超过高度3.8倍的字块拼接送入Windows OCR。另用同一原始卡行预读。按各两次同期窗口对照核对。独立变体包括含商店关键词的连续长句和浅底深色控件，未用于选取短字块条件。",
+  "offline_color_shop": {
+    "480": {
+      "shop_pairs_any_control": 0,
+      "total_shop_pairs": 2,
+      "clean_model_ms": [
+        313.65,
+        263.16
+      ]
+    },
+    "720": {
+      "shop_pairs_any_control": 2,
+      "total_shop_pairs": 2,
+      "clean_model_ms": [
+        320.21,
+        326.26
+      ]
+    },
+    "1128": {
+      "shop_pairs_any_control": 2,
+      "total_shop_pairs": 2,
+      "clean_model_ms": [
+        487.71,
+        304.11
+      ]
+    }
+  },
+  "synthetic_controls": {
+    "total": 20,
+    "would_announce_unverified": 7,
+    "full_withholds": 20,
+    "fast_withholds": 13,
+    "cases": [
+      {
+        "source": 0,
+        "size": 16,
+        "kind": "shop",
+        "exact_input": true,
+        "gate": false,
+        "fast_count": 3,
+        "full_count": 0,
+        "unexpected": 3,
+        "full_is_shop": true,
+        "full_detected_words": [
+          "购买",
+          "刷新"
+        ],
+        "page": "run_relics"
+      },
+      {
+        "source": 0,
+        "size": 16,
+        "kind": "roster",
+        "exact_input": true,
+        "gate": false,
+        "fast_count": 3,
+        "full_count": 0,
+        "unexpected": 3,
+        "full_is_shop": false,
+        "full_detected_words": [
+          "技能",
+          "分支+"
+        ],
+        "page": "run_roster"
+      },
+      {
+        "source": 0,
+        "size": 20,
+        "kind": "shop",
+        "exact_input": true,
+        "gate": true,
+        "fast_count": 3,
+        "full_count": 0,
+        "unexpected": 0,
+        "full_is_shop": true,
+        "full_detected_words": [
+          "购买",
+          "刷新"
+        ],
+        "page": "run_relics"
+      },
+      {
+        "source": 0,
+        "size": 20,
+        "kind": "roster",
+        "exact_input": true,
+        "gate": false,
+        "fast_count": 3,
+        "full_count": 0,
+        "unexpected": 3,
+        "full_is_shop": false,
+        "full_detected_words": [
+          "技能",
+          "分支+"
+        ],
+        "page": "run_roster"
+      },
+      {
+        "source": 0,
+        "size": 24,
+        "kind": "shop",
+        "exact_input": true,
+        "gate": true,
+        "fast_count": 3,
+        "full_count": 0,
+        "unexpected": 0,
+        "full_is_shop": true,
+        "full_detected_words": [
+          "购买",
+          "刷新"
+        ],
+        "page": "run_relics"
+      },
+      {
+        "source": 0,
+        "size": 24,
+        "kind": "roster",
+        "exact_input": true,
+        "gate": true,
+        "fast_count": 3,
+        "full_count": 0,
+        "unexpected": 0,
+        "full_is_shop": false,
+        "full_detected_words": [
+          "技能",
+          "分支+"
+        ],
+        "page": "run_roster"
+      },
+      {
+        "source": 0,
+        "size": 28,
+        "kind": "shop",
+        "exact_input": true,
+        "gate": true,
+        "fast_count": 3,
+        "full_count": 0,
+        "unexpected": 0,
+        "full_is_shop": true,
+        "full_detected_words": [
+          "购买",
+          "刷新"
+        ],
+        "page": "run_relics"
+      },
+      {
+        "source": 0,
+        "size": 28,
+        "kind": "roster",
+        "exact_input": true,
+        "gate": false,
+        "fast_count": 3,
+        "full_count": 0,
+        "unexpected": 3,
+        "full_is_shop": false,
+        "full_detected_words": [
+          "技能",
+          "分支+"
+        ],
+        "page": "run_roster"
+      },
+      {
+        "source": 0,
+        "size": 32,
+        "kind": "shop",
+        "exact_input": true,
+        "gate": true,
+        "fast_count": 3,
+        "full_count": 0,
+        "unexpected": 0,
+        "full_is_shop": true,
+        "full_detected_words": [
+          "购买",
+          "刷新"
+        ],
+        "page": "run_relics"
+      },
+      {
+        "source": 0,
+        "size": 32,
+        "kind": "roster",
+        "exact_input": true,
+        "gate": false,
+        "fast_count": 3,
+        "full_count": 0,
+        "unexpected": 3,
+        "full_is_shop": false,
+        "full_detected_words": [
+          "技能",
+          "分支+"
+        ],
+        "page": "run_roster"
+      },
+      {
+        "source": 1,
+        "size": 16,
+        "kind": "shop",
+        "exact_input": true,
+        "gate": false,
+        "fast_count": 3,
+        "full_count": 0,
+        "unexpected": 3,
+        "full_is_shop": true,
+        "full_detected_words": [
+          "购买",
+          "刷新"
+        ],
+        "page": "run_relics"
+      },
+      {
+        "source": 1,
+        "size": 16,
+        "kind": "roster",
+        "exact_input": true,
+        "gate": true,
+        "fast_count": 3,
+        "full_count": 0,
+        "unexpected": 0,
+        "full_is_shop": false,
+        "full_detected_words": [
+          "技能",
+          "分支+"
+        ],
+        "page": "run_roster"
+      },
+      {
+        "source": 1,
+        "size": 20,
+        "kind": "shop",
+        "exact_input": true,
+        "gate": false,
+        "fast_count": 3,
+        "full_count": 0,
+        "unexpected": 3,
+        "full_is_shop": true,
+        "full_detected_words": [
+          "购买",
+          "刷新"
+        ],
+        "page": "run_relics"
+      },
+      {
+        "source": 1,
+        "size": 20,
+        "kind": "roster",
+        "exact_input": true,
+        "gate": true,
+        "fast_count": 3,
+        "full_count": 0,
+        "unexpected": 0,
+        "full_is_shop": false,
+        "full_detected_words": [
+          "技能",
+          "分支+"
+        ],
+        "page": "run_roster"
+      },
+      {
+        "source": 1,
+        "size": 24,
+        "kind": "shop",
+        "exact_input": true,
+        "gate": true,
+        "fast_count": 3,
+        "full_count": 0,
+        "unexpected": 0,
+        "full_is_shop": true,
+        "full_detected_words": [
+          "购买",
+          "刷新"
+        ],
+        "page": "run_relics"
+      },
+      {
+        "source": 1,
+        "size": 24,
+        "kind": "roster",
+        "exact_input": true,
+        "gate": true,
+        "fast_count": 3,
+        "full_count": 0,
+        "unexpected": 0,
+        "full_is_shop": false,
+        "full_detected_words": [
+          "技能",
+          "分支+"
+        ],
+        "page": "run_roster"
+      },
+      {
+        "source": 1,
+        "size": 28,
+        "kind": "shop",
+        "exact_input": true,
+        "gate": true,
+        "fast_count": 3,
+        "full_count": 0,
+        "unexpected": 0,
+        "full_is_shop": true,
+        "full_detected_words": [
+          "购买",
+          "刷新"
+        ],
+        "page": "run_relics"
+      },
+      {
+        "source": 1,
+        "size": 28,
+        "kind": "roster",
+        "exact_input": true,
+        "gate": true,
+        "fast_count": 3,
+        "full_count": 0,
+        "unexpected": 0,
+        "full_is_shop": false,
+        "full_detected_words": [
+          "技能",
+          "分支+"
+        ],
+        "page": "run_roster"
+      },
+      {
+        "source": 1,
+        "size": 32,
+        "kind": "shop",
+        "exact_input": true,
+        "gate": true,
+        "fast_count": 3,
+        "full_count": 0,
+        "unexpected": 0,
+        "full_is_shop": true,
+        "full_detected_words": [
+          "购买",
+          "刷新"
+        ],
+        "page": "run_relics"
+      },
+      {
+        "source": 1,
+        "size": 32,
+        "kind": "roster",
+        "exact_input": true,
+        "gate": true,
+        "fast_count": 3,
+        "full_count": 0,
+        "unexpected": 0,
+        "full_is_shop": false,
+        "full_detected_words": [
+          "技能",
+          "分支+"
+        ],
+        "page": "run_roster"
+      }
+    ]
+  },
+  "decision": "隔离研究保留，常规与测试助手延用已发布的整页核对路径。全屏快速读字未达到半秒稳定首显，小字漏读和页面归属均需独立验证。",
+  "limits": [
+    "两张密集正页来自同一来源，不代表所有布局。不同大小的模拟控件使用微软雅黑绘制，结果只说明判定方法的边界，不能推断真实游戏错误率。",
+    "未测真人切页、本轮地图和与游戏同跑；提前确认两张可见卡不证明整页清单。"
+  ]
+}
