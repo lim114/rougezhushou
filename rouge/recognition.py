@@ -448,7 +448,7 @@ class ScreenReader:
                     publish_result(config)
         early=(on_map is not None and not expanded and not shop and page in ('exploration','node_detail'))
         run=read_run(image,texts,self._engine,icon_cache=self._icon_cache,run_context=run_context,
-                     on_hud=on_hud,on_map_gold=map_reference,native_content=native_content,
+                     on_hud=on_hud,on_map_gold=map_reference,native_content=native_content,gpu_icons=self.backend=='openvino-gpu',
                      on_map_config=publish_map if early else None,after_map_hud=finish_sparse_map if early else None,
                      on_held_names=on_held_names if expanded and not shop else None)
         elapsed('run')

@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-普通CPU隔离窗口三轮，对9件和14件藏品页，在采集等待期间预读后各有两张正确卡首次可见的中位数分别由1706降至524毫秒、由2097降至612毫秒。其他卡行被遮住的18组画面与原图送入预读OCR的像素完全一致，实验暂未启用。仍需覆盖局部区域之外的当前页面证据并验证完整显示时间。[回执](verification/maintenance/dense-inventory-capture-preview-20261124/summary.json)。
+核显测试助手保留原CPU定分。三轮隔离窗口，9件页整页中位数由5700变为4509毫秒，14件页由4982变为2837毫秒。两张可见卡首显及动画地图仍待稳定低于500毫秒。下一步需缩短当前画面的文字与页面确认时间并验收游戏同跑。[回执](verification/maintenance/dense-inventory-icon-screen-20261126/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 

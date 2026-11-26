@@ -113,7 +113,10 @@ def _read_map_hud(image, texts, engine, native_content, on_hud, on_map_gold):
     return resources
 
 
-def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None,on_map_gold=None,native_content=None,on_map_config=None,on_held_names=None,after_map_hud=None):
+def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None,on_map_gold=None,native_content=None,on_map_config=None,on_held_names=None,after_map_hud=None,gpu_icons=False):
+    icon_options = {'cache': icon_cache}
+    if gpu_icons:
+        icon_options['gpu_screen'] = True
     texts=recheck_run_names(image,texts,engine)
     texts=reconfirm_owned_popup_footer(image,texts,engine)
     anchors={t['text']:t for t in texts if t['confidence']>=.9}
@@ -155,7 +158,7 @@ def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None,o
             # The expanded bar has no count to read first. Artwork needs only
             # current pixels and its own icon cache; the reader keeps its OCR engine.
             with ThreadPoolExecutor(max_workers=1, thread_name_prefix='rouge-held-bar') as worker:
-                artwork = worker.submit(copy_context().run, match_held_icons, image, held, None, cache=icon_cache)
+                artwork = worker.submit(copy_context().run, match_held_icons, image, held, None, **icon_options)
                 resources = _read_map_hud(image, texts, engine, native_content, on_hud, gold_callback)
                 raw_icons = artwork.result()
         else:
@@ -176,7 +179,7 @@ def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None,o
     if fresh is None:fresh=read_config(image,texts,held,engine=engine,known_config=known) if is_map else {}
     config={**known,**fresh}
     if raw_icons is None:
-        raw_icons = match_held_icons(image,held,count,cache=icon_cache)
+        raw_icons = match_held_icons(image,held,count,**icon_options)
     icons=resolve_difficulty_icons(resolve_owned_icons(raw_icons,cards),config.get('difficulty'))
     if count==0 and icons:count=None
     icon_ids = {icon['id'] for icon in icons if icon['confirmed']}

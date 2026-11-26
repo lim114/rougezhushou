@@ -1,0 +1,1542 @@
+{
+  "title": "核显测试助手用当前持有栏像素筛选图标候选",
+  "summary": "核显测试助手保留原CPU定分。三轮隔离窗口，9件页整页中位数由5700变为4509毫秒，14件页由4982变为2837毫秒。两张可见卡首显及动画地图仍待稳定低于500毫秒。",
+  "baseline_commit": "0d55cdde9",
+  "implementation_changed": true,
+  "acceptance_complete": false,
+  "implemented_windows": {
+    "A": {
+      "control": {
+        "runs": [
+          {
+            "first": 1864.43,
+            "full": 5932.2,
+            "gpu_calls": 0,
+            "same_final_fields": true,
+            "read_ms": 5357.71,
+            "queue_ms": 150.43,
+            "full_ocr_ms": 1470.82,
+            "held_icons_ms": 3816.2
+          },
+          {
+            "first": 1552.34,
+            "full": 5304.88,
+            "gpu_calls": 0,
+            "same_final_fields": true,
+            "read_ms": 4757.2,
+            "queue_ms": 152.72,
+            "full_ocr_ms": 1205.45,
+            "held_icons_ms": 3479.4
+          },
+          {
+            "first": 1773.79,
+            "full": 5700.38,
+            "gpu_calls": 0,
+            "same_final_fields": true,
+            "read_ms": 5236.79,
+            "queue_ms": 146.09,
+            "full_ocr_ms": 1382.89,
+            "held_icons_ms": 3782.2
+          }
+        ],
+        "first_ms": 1773.79,
+        "full_ms": 5700.38,
+        "first_below_500": 0
+      },
+      "enabled": {
+        "runs": [
+          {
+            "first": 2786.29,
+            "full": 5629.46,
+            "gpu_calls": 3,
+            "same_final_fields": true,
+            "read_ms": 4716.24,
+            "queue_ms": 206.55,
+            "full_ocr_ms": 2138.51,
+            "held_icons_ms": 2309.5
+          },
+          {
+            "first": 2022.23,
+            "full": 4509.33,
+            "gpu_calls": 3,
+            "same_final_fields": true,
+            "read_ms": 3949.69,
+            "queue_ms": 155.63,
+            "full_ocr_ms": 1625.49,
+            "held_icons_ms": 2238.4
+          },
+          {
+            "first": 1873.39,
+            "full": 4223.92,
+            "gpu_calls": 3,
+            "same_final_fields": true,
+            "read_ms": 3634.8,
+            "queue_ms": 153.57,
+            "full_ocr_ms": 1472.44,
+            "held_icons_ms": 2094.6
+          }
+        ],
+        "first_ms": 2022.23,
+        "full_ms": 4509.33,
+        "first_below_500": 0
+      }
+    },
+    "B": {
+      "control": {
+        "runs": [
+          {
+            "first": 2460.21,
+            "full": 5417.77,
+            "gpu_calls": 0,
+            "same_final_fields": true,
+            "read_ms": 4880.95,
+            "queue_ms": 173.49,
+            "full_ocr_ms": 1991.13,
+            "held_icons_ms": 2785.7
+          },
+          {
+            "first": 2014.57,
+            "full": 4581.38,
+            "gpu_calls": 0,
+            "same_final_fields": true,
+            "read_ms": 4126.71,
+            "queue_ms": 139.25,
+            "full_ocr_ms": 1664.95,
+            "held_icons_ms": 2382.1
+          },
+          {
+            "first": 1994.03,
+            "full": 4981.75,
+            "gpu_calls": 0,
+            "same_final_fields": true,
+            "read_ms": 4458.85,
+            "queue_ms": 169.6,
+            "full_ocr_ms": 1586.66,
+            "held_icons_ms": 2779.6
+          }
+        ],
+        "first_ms": 2014.57,
+        "full_ms": 4981.75,
+        "first_below_500": 0
+      },
+      "enabled": {
+        "runs": [
+          {
+            "first": 2110.86,
+            "full": 3049.93,
+            "gpu_calls": 3,
+            "same_final_fields": true,
+            "read_ms": 2505.76,
+            "queue_ms": 146.93,
+            "full_ocr_ms": 1719.93,
+            "held_icons_ms": 691.0
+          },
+          {
+            "first": 1809.84,
+            "full": 2541.7,
+            "gpu_calls": 3,
+            "same_final_fields": true,
+            "read_ms": 2082.95,
+            "queue_ms": 140.04,
+            "full_ocr_ms": 1469.07,
+            "held_icons_ms": 536.7
+          },
+          {
+            "first": 1882.64,
+            "full": 2837.41,
+            "gpu_calls": 3,
+            "same_final_fields": true,
+            "read_ms": 2282.64,
+            "queue_ms": 147.56,
+            "full_ocr_ms": 1507.62,
+            "held_icons_ms": 671.4
+          }
+        ],
+        "first_ms": 1882.64,
+        "full_ms": 2837.41,
+        "first_below_500": 0
+      }
+    },
+    "map": {
+      "control": {
+        "runs": [
+          {
+            "first": 1176.25,
+            "full_paint": 5118.11,
+            "later_failed": 0,
+            "gpu_calls": 0
+          },
+          {
+            "first": 1475.89,
+            "full_paint": 4944.63,
+            "later_failed": 0,
+            "gpu_calls": 0
+          },
+          {
+            "first": 1152.29,
+            "full_paint": 4802.27,
+            "later_failed": 0,
+            "gpu_calls": 0
+          }
+        ],
+        "first_ms": 1176.25,
+        "full_ms": null,
+        "first_below_500": 0
+      },
+      "enabled": {
+        "runs": [
+          {
+            "first": 1266.96,
+            "full_paint": 4018.87,
+            "later_failed": 0,
+            "gpu_calls": 9
+          },
+          {
+            "first": 1140.23,
+            "full_paint": 3716.77,
+            "later_failed": 0,
+            "gpu_calls": 8
+          },
+          {
+            "first": 1206.5,
+            "full_paint": 3309.96,
+            "later_failed": 0,
+            "gpu_calls": 9
+          }
+        ],
+        "first_ms": 1206.5,
+        "full_ms": null,
+        "first_below_500": 0
+      }
+    }
+  },
+  "production_check": "同版正常入口仅对照是否启用核显图标筛选。正式源码仍对入选项运行原CPU匹配器，未接入按卡片布置猜测和提前匹配的原型。两组密集页各三对窗口及三对动画地图，另在28个图标栏比较正式CPU与核显路径。",
+  "startup_fallback": "Windows核显测试模式在首次使用时初始化Intel OpenCL设备。设备或内核不可用，本次进程所有读者使用原CPU图标匹配，本机.local/ocr-icon-diagnostics.log追加一次原因。普通启动使用CPU而且不会初始化此设备。",
+  "production_holdout": {
+    "cases": 28,
+    "identical": 28,
+    "reference_tests": 2419,
+    "direct_seeds": 179
+  },
+  "native_fallback_checks": [
+    {
+      "path": "device_unavailable",
+      "calls": 2,
+      "records": 1,
+      "same_cpu_result": true
+    },
+    {
+      "path": "compiler_rejected",
+      "calls": 2,
+      "records": 1,
+      "same_cpu_result": true
+    }
+  ],
+  "native_application": {
+    "relaunched": true,
+    "gpu_ocr": true,
+    "visible": true,
+    "responding": true,
+    "private_unchanged": true
+  },
+  "tests": {
+    "tests": 143,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "modules": [
+      "test_held_icon_gpu",
+      "test_coarse_matching",
+      "test_held_cards_054",
+      "test_held_footer_054",
+      "test_held_integration_054",
+      "test_inventory_catalog_053",
+      "test_ocr_cpu_backend",
+      "test_projection_screen_029",
+      "test_refined_matching_061",
+      "test_relic_screening_024",
+      "test_settling_detection",
+      "test_relic_recognition_022",
+      "test_sampling_flow"
+    ]
+  },
+  "prototype_evidence": {
+    "prototype_summary": "核显隔离窗口各三轮，提前核对同帧持有栏并保留原彩色定分后，9件页整页中位数由3217降至1424毫秒，14件页由3639降至1730毫秒。两张可见卡片首显仍超过500毫秒。",
+    "method": "三项各有同期对照，原生Windows隔离源窗口与助手窗口，热CPU或指定核显后端。先从不同地图切至两张留存多排页，逐帧在助手网格核对两张目标卡图像，同时另计完整刷新后首次像素匹配。每个页面每臂三轮，组内交替顺序；跨组不直接比较。原始正式界面输出逐字段对照，省略时间和性能诊断；每轮校验三个私人文件原件字节。实验未操作游戏。",
+    "windows": {
+      "cpu_schedule": {
+        "nine": {
+          "current": {
+            "runs": [
+              {
+                "first_visible_ms": 2425.23,
+                "full_ms": 4924.47,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 2378.8,
+                "preparation": []
+              },
+              {
+                "first_visible_ms": 1806.0,
+                "full_ms": 3805.18,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 1908.1,
+                "preparation": []
+              },
+              {
+                "first_visible_ms": 1633.93,
+                "full_ms": 3201.87,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 1481.9,
+                "preparation": []
+              }
+            ],
+            "median_ms": {
+              "first_visible_ms": 1806.0,
+              "full_ms": 3805.18,
+              "icon_call_ms": 1908.1
+            },
+            "first_below_500": 0,
+            "full_below_500": 0
+          },
+          "candidate": {
+            "runs": [
+              {
+                "first_visible_ms": 1695.54,
+                "full_ms": 2913.44,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 1141.6,
+                "preparation": [
+                  {
+                    "role": "offered",
+                    "boxes": 1
+                  },
+                  {
+                    "role": "computed",
+                    "ms": 2258.58,
+                    "hits": 5
+                  },
+                  {
+                    "role": "reused",
+                    "ms": 1138.48
+                  }
+                ]
+              },
+              {
+                "first_visible_ms": 1980.68,
+                "full_ms": 2864.36,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 794.8,
+                "preparation": [
+                  {
+                    "role": "offered",
+                    "boxes": 1
+                  },
+                  {
+                    "role": "computed",
+                    "ms": 2230.67,
+                    "hits": 5
+                  },
+                  {
+                    "role": "reused",
+                    "ms": 793.76
+                  }
+                ]
+              },
+              {
+                "first_visible_ms": 1638.08,
+                "full_ms": 2455.95,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 739.2,
+                "preparation": [
+                  {
+                    "role": "offered",
+                    "boxes": 1
+                  },
+                  {
+                    "role": "computed",
+                    "ms": 1752.8,
+                    "hits": 5
+                  },
+                  {
+                    "role": "reused",
+                    "ms": 738.31
+                  }
+                ]
+              }
+            ],
+            "median_ms": {
+              "first_visible_ms": 1695.54,
+              "full_ms": 2864.36,
+              "icon_call_ms": 794.8
+            },
+            "first_below_500": 0,
+            "full_below_500": 0
+          }
+        },
+        "fourteen": {
+          "current": {
+            "runs": [
+              {
+                "first_visible_ms": 2228.42,
+                "full_ms": 3929.54,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 1571.9,
+                "preparation": []
+              },
+              {
+                "first_visible_ms": 1629.89,
+                "full_ms": 2811.61,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 1070.3,
+                "preparation": []
+              },
+              {
+                "first_visible_ms": 2178.18,
+                "full_ms": 3579.3,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 1307.2,
+                "preparation": []
+              }
+            ],
+            "median_ms": {
+              "first_visible_ms": 2178.18,
+              "full_ms": 3579.3,
+              "icon_call_ms": 1307.2
+            },
+            "first_below_500": 0,
+            "full_below_500": 0
+          },
+          "candidate": {
+            "runs": [
+              {
+                "first_visible_ms": 2040.94,
+                "full_ms": 2374.83,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 206.3,
+                "preparation": [
+                  {
+                    "role": "offered",
+                    "boxes": 1
+                  },
+                  {
+                    "role": "computed",
+                    "ms": 1745.73,
+                    "hits": 4
+                  },
+                  {
+                    "role": "reused",
+                    "ms": 205.39
+                  }
+                ]
+              },
+              {
+                "first_visible_ms": 1896.21,
+                "full_ms": 2246.52,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 280.9,
+                "preparation": [
+                  {
+                    "role": "offered",
+                    "boxes": 1
+                  },
+                  {
+                    "role": "computed",
+                    "ms": 1598.31,
+                    "hits": 4
+                  },
+                  {
+                    "role": "reused",
+                    "ms": 279.83
+                  }
+                ]
+              },
+              {
+                "first_visible_ms": 2198.35,
+                "full_ms": 2726.23,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 414.7,
+                "preparation": [
+                  {
+                    "role": "offered",
+                    "boxes": 1
+                  },
+                  {
+                    "role": "computed",
+                    "ms": 1972.19,
+                    "hits": 4
+                  },
+                  {
+                    "role": "reused",
+                    "ms": 414.19
+                  }
+                ]
+              }
+            ],
+            "median_ms": {
+              "first_visible_ms": 2040.94,
+              "full_ms": 2374.83,
+              "icon_call_ms": 280.9
+            },
+            "first_below_500": 0,
+            "full_below_500": 0
+          }
+        }
+      },
+      "gpu_filter": {
+        "nine": {
+          "current": {
+            "runs": [
+              {
+                "first_visible_ms": 1114.19,
+                "full_ms": 3267.03,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 2041.7,
+                "preparation": []
+              },
+              {
+                "first_visible_ms": 1245.94,
+                "full_ms": 2955.27,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 1629.6,
+                "preparation": []
+              },
+              {
+                "first_visible_ms": 1226.07,
+                "full_ms": 3035.45,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 1684.3,
+                "preparation": []
+              }
+            ],
+            "median_ms": {
+              "first_visible_ms": 1226.07,
+              "full_ms": 3035.45,
+              "icon_call_ms": 1684.3
+            },
+            "first_below_500": 0,
+            "full_below_500": 0
+          },
+          "candidate": {
+            "runs": [
+              {
+                "first_visible_ms": 1055.25,
+                "full_ms": 1922.94,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 748.8,
+                "preparation": [
+                  {
+                    "role": "gpu-regions",
+                    "ms": 1498.62,
+                    "n": 1,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 4,
+                        "elapsed": 628.5
+                      }
+                    ]
+                  },
+                  {
+                    "role": "gpu-regions",
+                    "ms": 747.94,
+                    "n": 5,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 25,
+                        "elapsed": 73.8
+                      },
+                      {
+                        "phase": "refine",
+                        "n": 153,
+                        "kept": 125,
+                        "elapsed": 80.7
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "first_visible_ms": 1187.16,
+                "full_ms": 2072.66,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 780.9,
+                "preparation": [
+                  {
+                    "role": "gpu-regions",
+                    "ms": 1224.17,
+                    "n": 1,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 4,
+                        "elapsed": 431.0
+                      }
+                    ]
+                  },
+                  {
+                    "role": "gpu-regions",
+                    "ms": 780.13,
+                    "n": 5,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 25,
+                        "elapsed": 92.8
+                      },
+                      {
+                        "phase": "refine",
+                        "n": 153,
+                        "kept": 125,
+                        "elapsed": 82.1
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "first_visible_ms": 847.61,
+                "full_ms": 1630.61,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 703.6,
+                "preparation": [
+                  {
+                    "role": "gpu-regions",
+                    "ms": 1322.61,
+                    "n": 1,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 4,
+                        "elapsed": 595.1
+                      }
+                    ]
+                  },
+                  {
+                    "role": "gpu-regions",
+                    "ms": 703.01,
+                    "n": 5,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 25,
+                        "elapsed": 67.4
+                      },
+                      {
+                        "phase": "refine",
+                        "n": 153,
+                        "kept": 125,
+                        "elapsed": 69.2
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "median_ms": {
+              "first_visible_ms": 1055.25,
+              "full_ms": 1922.94,
+              "icon_call_ms": 748.8
+            },
+            "first_below_500": 0,
+            "full_below_500": 0
+          }
+        },
+        "fourteen": {
+          "current": {
+            "runs": [
+              {
+                "first_visible_ms": 1032.48,
+                "full_ms": 2616.28,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 1499.7,
+                "preparation": []
+              },
+              {
+                "first_visible_ms": 1422.4,
+                "full_ms": 3071.88,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 1541.9,
+                "preparation": []
+              },
+              {
+                "first_visible_ms": 1208.71,
+                "full_ms": 2717.29,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 1418.4,
+                "preparation": []
+              }
+            ],
+            "median_ms": {
+              "first_visible_ms": 1208.71,
+              "full_ms": 2717.29,
+              "icon_call_ms": 1499.7
+            },
+            "first_below_500": 0,
+            "full_below_500": 0
+          },
+          "candidate": {
+            "runs": [
+              {
+                "first_visible_ms": 1156.01,
+                "full_ms": 1574.23,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 259.4,
+                "preparation": [
+                  {
+                    "role": "gpu-regions",
+                    "ms": 1074.36,
+                    "n": 1,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 4,
+                        "elapsed": 430.9
+                      }
+                    ]
+                  },
+                  {
+                    "role": "gpu-regions",
+                    "ms": 258.34,
+                    "n": 4,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 8,
+                        "elapsed": 74.8
+                      },
+                      {
+                        "phase": "refine",
+                        "n": 42,
+                        "kept": 23,
+                        "elapsed": 28.7
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "first_visible_ms": 1407.64,
+                "full_ms": 1791.44,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 239.0,
+                "preparation": [
+                  {
+                    "role": "gpu-regions",
+                    "ms": 1058.02,
+                    "n": 1,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 4,
+                        "elapsed": 428.2
+                      }
+                    ]
+                  },
+                  {
+                    "role": "gpu-regions",
+                    "ms": 237.99,
+                    "n": 4,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 8,
+                        "elapsed": 109.6
+                      },
+                      {
+                        "phase": "refine",
+                        "n": 42,
+                        "kept": 23,
+                        "elapsed": 14.0
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "first_visible_ms": 1345.55,
+                "full_ms": 1712.96,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 254.4,
+                "preparation": [
+                  {
+                    "role": "gpu-regions",
+                    "ms": 1420.5,
+                    "n": 1,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 4,
+                        "elapsed": 599.4
+                      }
+                    ]
+                  },
+                  {
+                    "role": "gpu-regions",
+                    "ms": 253.8,
+                    "n": 4,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 8,
+                        "elapsed": 73.6
+                      },
+                      {
+                        "phase": "refine",
+                        "n": 42,
+                        "kept": 23,
+                        "elapsed": 21.4
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "median_ms": {
+              "first_visible_ms": 1345.55,
+              "full_ms": 1712.96,
+              "icon_call_ms": 254.4
+            },
+            "first_below_500": 0,
+            "full_below_500": 0
+          }
+        }
+      },
+      "gpu_filter_with_schedule": {
+        "nine": {
+          "current": {
+            "runs": [
+              {
+                "first_visible_ms": 1226.85,
+                "full_ms": 3027.99,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 1696.1,
+                "preparation": []
+              },
+              {
+                "first_visible_ms": 945.35,
+                "full_ms": 3216.8,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 2100.4,
+                "preparation": []
+              },
+              {
+                "first_visible_ms": 1887.51,
+                "full_ms": 4453.27,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 2421.4,
+                "preparation": []
+              }
+            ],
+            "median_ms": {
+              "first_visible_ms": 1226.85,
+              "full_ms": 3216.8,
+              "icon_call_ms": 2100.4
+            },
+            "first_below_500": 0,
+            "full_below_500": 0
+          },
+          "candidate": {
+            "runs": [
+              {
+                "first_visible_ms": 1224.15,
+                "full_ms": 1424.21,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 149.8,
+                "preparation": [
+                  {
+                    "role": "gpu-regions",
+                    "ms": 1380.86,
+                    "n": 1,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 4,
+                        "elapsed": 524.0
+                      }
+                    ]
+                  },
+                  {
+                    "role": "offered",
+                    "boxes": 1
+                  },
+                  {
+                    "role": "gpu-regions",
+                    "ms": 1012.24,
+                    "n": 5,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 25,
+                        "elapsed": 100.2
+                      },
+                      {
+                        "phase": "refine",
+                        "n": 153,
+                        "kept": 125,
+                        "elapsed": 109.9
+                      }
+                    ]
+                  },
+                  {
+                    "role": "computed",
+                    "ms": 1012.27,
+                    "hits": 5
+                  },
+                  {
+                    "role": "reused",
+                    "ms": 148.61
+                  }
+                ]
+              },
+              {
+                "first_visible_ms": 1044.62,
+                "full_ms": 1278.06,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 116.7,
+                "preparation": [
+                  {
+                    "role": "gpu-regions",
+                    "ms": 1192.83,
+                    "n": 1,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 4,
+                        "elapsed": 539.6
+                      }
+                    ]
+                  },
+                  {
+                    "role": "offered",
+                    "boxes": 1
+                  },
+                  {
+                    "role": "gpu-regions",
+                    "ms": 881.71,
+                    "n": 5,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 25,
+                        "elapsed": 56.2
+                      },
+                      {
+                        "phase": "refine",
+                        "n": 153,
+                        "kept": 125,
+                        "elapsed": 98.3
+                      }
+                    ]
+                  },
+                  {
+                    "role": "computed",
+                    "ms": 881.73,
+                    "hits": 5
+                  },
+                  {
+                    "role": "reused",
+                    "ms": 115.57
+                  }
+                ]
+              },
+              {
+                "first_visible_ms": 1652.8,
+                "full_ms": 2052.42,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 189.0,
+                "preparation": [
+                  {
+                    "role": "gpu-regions",
+                    "ms": 1901.57,
+                    "n": 1,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 4,
+                        "elapsed": 756.6
+                      }
+                    ]
+                  },
+                  {
+                    "role": "offered",
+                    "boxes": 1
+                  },
+                  {
+                    "role": "gpu-regions",
+                    "ms": 1404.06,
+                    "n": 5,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 25,
+                        "elapsed": 106.7
+                      },
+                      {
+                        "phase": "refine",
+                        "n": 153,
+                        "kept": 125,
+                        "elapsed": 156.8
+                      }
+                    ]
+                  },
+                  {
+                    "role": "computed",
+                    "ms": 1404.1,
+                    "hits": 5
+                  },
+                  {
+                    "role": "reused",
+                    "ms": 187.15
+                  }
+                ]
+              }
+            ],
+            "median_ms": {
+              "first_visible_ms": 1224.15,
+              "full_ms": 1424.21,
+              "icon_call_ms": 149.8
+            },
+            "first_below_500": 0,
+            "full_below_500": 0
+          }
+        },
+        "fourteen": {
+          "current": {
+            "runs": [
+              {
+                "first_visible_ms": 1499.94,
+                "full_ms": 3050.32,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 1473.8,
+                "preparation": []
+              },
+              {
+                "first_visible_ms": 2029.31,
+                "full_ms": 4594.98,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 2234.1,
+                "preparation": []
+              },
+              {
+                "first_visible_ms": 1507.02,
+                "full_ms": 3638.87,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 1980.8,
+                "preparation": []
+              }
+            ],
+            "median_ms": {
+              "first_visible_ms": 1507.02,
+              "full_ms": 3638.87,
+              "icon_call_ms": 1980.8
+            },
+            "first_below_500": 0,
+            "full_below_500": 0
+          },
+          "candidate": {
+            "runs": [
+              {
+                "first_visible_ms": 1519.78,
+                "full_ms": 1519.78,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 1.0,
+                "preparation": [
+                  {
+                    "role": "gpu-regions",
+                    "ms": 1531.69,
+                    "n": 1,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 4,
+                        "elapsed": 614.4
+                      }
+                    ]
+                  },
+                  {
+                    "role": "offered",
+                    "boxes": 1
+                  },
+                  {
+                    "role": "gpu-regions",
+                    "ms": 337.64,
+                    "n": 4,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 8,
+                        "elapsed": 101.9
+                      },
+                      {
+                        "phase": "refine",
+                        "n": 42,
+                        "kept": 23,
+                        "elapsed": 54.5
+                      }
+                    ]
+                  },
+                  {
+                    "role": "computed",
+                    "ms": 337.66,
+                    "hits": 4
+                  },
+                  {
+                    "role": "reused",
+                    "ms": 0.05
+                  }
+                ]
+              },
+              {
+                "first_visible_ms": 1640.17,
+                "full_ms": 1874.25,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 1.6,
+                "preparation": [
+                  {
+                    "role": "gpu-regions",
+                    "ms": 2883.36,
+                    "n": 1,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 4,
+                        "elapsed": 924.1
+                      }
+                    ]
+                  },
+                  {
+                    "role": "offered",
+                    "boxes": 1
+                  },
+                  {
+                    "role": "gpu-regions",
+                    "ms": 377.4,
+                    "n": 4,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 8,
+                        "elapsed": 104.8
+                      },
+                      {
+                        "phase": "refine",
+                        "n": 42,
+                        "kept": 23,
+                        "elapsed": 51.0
+                      }
+                    ]
+                  },
+                  {
+                    "role": "computed",
+                    "ms": 377.42,
+                    "hits": 4
+                  },
+                  {
+                    "role": "reused",
+                    "ms": 0.08
+                  }
+                ]
+              },
+              {
+                "first_visible_ms": 1499.36,
+                "full_ms": 1730.1,
+                "confirmed_equivalent": true,
+                "icon_call_ms": 1.0,
+                "preparation": [
+                  {
+                    "role": "gpu-regions",
+                    "ms": 2000.06,
+                    "n": 1,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 4,
+                        "elapsed": 881.6
+                      }
+                    ]
+                  },
+                  {
+                    "role": "offered",
+                    "boxes": 1
+                  },
+                  {
+                    "role": "gpu-regions",
+                    "ms": 356.76,
+                    "n": 4,
+                    "screens": [
+                      {
+                        "phase": "coarse",
+                        "n": 956,
+                        "kept": 8,
+                        "elapsed": 117.0
+                      },
+                      {
+                        "phase": "refine",
+                        "n": 42,
+                        "kept": 23,
+                        "elapsed": 30.7
+                      }
+                    ]
+                  },
+                  {
+                    "role": "computed",
+                    "ms": 356.78,
+                    "hits": 4
+                  },
+                  {
+                    "role": "reused",
+                    "ms": 0.05
+                  }
+                ]
+              }
+            ],
+            "median_ms": {
+              "first_visible_ms": 1519.78,
+              "full_ms": 1730.1,
+              "icon_call_ms": 1.0
+            },
+            "first_below_500": 0,
+            "full_below_500": 0
+          }
+        }
+      }
+    },
+    "algo": "字迹排版只用于调度。提前图标结果只在最终正常识别独立调用匹配且持有栏像素、尺寸与原坐标参数完全相等时复用。核显按互不重叠的不透明方块求色彩均值与方差界限，再用原分辨率有遮罩RGB像素验证可能的位置；保留现有CPU彩色评分与歧义合并。",
+    "kernel": "使用本机已安装的Intel Arc OpenCL接口。四种粗尺度和原精调候选均按原顺序输出。暖态筛选可复用同尺寸图标库；首次构建和上传计入窗口实验。未测游戏共享核显时的耗时与帧率。",
+    "correctness": {
+      "cases": 28,
+      "same_final": 28,
+      "direct_template_comparisons": 2419,
+      "direct_coarse_seeds": 179,
+      "missing_seed": 0,
+      "method": "四个真实持有栏及其镜像、变暗变体，空白、纯色、噪声，以及13个含四个真图标的人工边界输入。每图抽取20种原画的四种大小并纳入所有核显保留项，直接用原OpenCV全分辨率搜索检查粗筛门槛。对实际程序分别检查完整图标记录、分数、坐标和歧义候选。纯色结果只证明算法等价。"
+    },
+    "isolated": [
+      {
+        "example": 1,
+        "times_ms": [
+          839.07,
+          364.28,
+          365.98,
+          367.44
+        ],
+        "last_stages": [
+          {
+            "phase": "coarse",
+            "n": 956,
+            "kept": 25,
+            "elapsed": 31.4
+          },
+          {
+            "phase": "refine",
+            "n": 153,
+            "kept": 125,
+            "elapsed": 12.4
+          }
+        ]
+      },
+      {
+        "example": 2,
+        "times_ms": [
+          145.25,
+          108.77,
+          144.6,
+          113.35
+        ],
+        "last_stages": [
+          {
+            "phase": "coarse",
+            "n": 956,
+            "kept": 8,
+            "elapsed": 32.4
+          },
+          {
+            "phase": "refine",
+            "n": 42,
+            "kept": 23,
+            "elapsed": 3.5
+          }
+        ]
+      },
+      {
+        "example": 3,
+        "times_ms": [
+          15.76,
+          21.74,
+          18.9,
+          8.08
+        ],
+        "last_stages": [
+          {
+            "phase": "coarse",
+            "n": 956,
+            "kept": 4,
+            "elapsed": 15.6
+          },
+          {
+            "phase": "coarse",
+            "n": 956,
+            "kept": 4,
+            "elapsed": 5.2
+          }
+        ]
+      },
+      {
+        "example": 4,
+        "times_ms": [
+          127.46,
+          95.34,
+          109.6,
+          107.69
+        ],
+        "last_stages": [
+          {
+            "phase": "coarse",
+            "n": 956,
+            "kept": 6,
+            "elapsed": 36.8
+          },
+          {
+            "phase": "refine",
+            "n": 33,
+            "kept": 21,
+            "elapsed": 10.4
+          }
+        ]
+      }
+    ],
+    "cpu_experiments": {
+      "projected_cell_lower_bound": [
+        {
+          "b": 3,
+          "norm_pass": 954,
+          "possible": 925,
+          "screen_ms": 221.6,
+          "remaining_ms": 1037.75,
+          "equal": true
+        },
+        {
+          "b": 4,
+          "norm_pass": 954,
+          "possible": 942,
+          "screen_ms": 123.28,
+          "remaining_ms": 1269.49,
+          "equal": true
+        },
+        {
+          "b": 6,
+          "norm_pass": 954,
+          "possible": 954,
+          "screen_ms": 108.73,
+          "remaining_ms": 989.29,
+          "equal": true
+        },
+        {
+          "b": 8,
+          "norm_pass": 954,
+          "possible": 954,
+          "screen_ms": 75.77,
+          "remaining_ms": 969.55,
+          "equal": true
+        }
+      ],
+      "shared_scales": [
+        {
+          "group": 2,
+          "kept": 836,
+          "first_page_total_ms": [
+            1137.04,
+            1249.76,
+            1186.23
+          ]
+        },
+        {
+          "group": 4,
+          "kept": 956,
+          "first_page_total_ms": [
+            1114.78,
+            1338.17,
+            1172.36
+          ]
+        }
+      ],
+      "matrix": [
+        {
+          "b": 8,
+          "step": 4,
+          "kept": 955,
+          "screen_ms": 413,
+          "total_ms": 2118
+        },
+        {
+          "b": 8,
+          "step": 2,
+          "kept": 941,
+          "screen_ms": 1586,
+          "total_ms": 3220
+        },
+        {
+          "b": 8,
+          "step": 1,
+          "kept": 888,
+          "screen_ms": 6550,
+          "total_ms": 8203
+        },
+        {
+          "b": 4,
+          "step": 2,
+          "kept": 772,
+          "screen_ms": 5615,
+          "total_ms": 6864
+        }
+      ],
+      "sphere_ms": [
+        {
+          "base": 995.15,
+          "ball": 1152.49
+        },
+        {
+          "base": 886.62,
+          "ball": 696.98
+        },
+        {
+          "base": 231.03,
+          "ball": 165.6
+        },
+        {
+          "base": 478.54,
+          "ball": 387.02
+        }
+      ]
+    },
+    "animated_map_control": {
+      "ref": {
+        "trials": [
+          {
+            "onset_shown_frame": 6,
+            "onset_to_window_ms": 1171.09,
+            "clear_shown_frame": 12,
+            "clear_to_window_ms": 967.22,
+            "later_failed_registrations": 0,
+            "full_paint_ms": 4499.54,
+            "gpu_icon_calls": 0
+          },
+          {
+            "onset_shown_frame": 6,
+            "onset_to_window_ms": 1054.11,
+            "clear_shown_frame": 12,
+            "clear_to_window_ms": 844.96,
+            "later_failed_registrations": 0,
+            "full_paint_ms": 4142.06,
+            "gpu_icon_calls": 0
+          },
+          {
+            "onset_shown_frame": 6,
+            "onset_to_window_ms": 875.21,
+            "clear_shown_frame": 12,
+            "clear_to_window_ms": 673.48,
+            "later_failed_registrations": 0,
+            "full_paint_ms": 4136.64,
+            "gpu_icon_calls": 0
+          },
+          {
+            "onset_shown_frame": 6,
+            "onset_to_window_ms": 1134.56,
+            "clear_shown_frame": 12,
+            "clear_to_window_ms": 932.92,
+            "later_failed_registrations": 0,
+            "full_paint_ms": 5775.01,
+            "gpu_icon_calls": 0
+          }
+        ],
+        "included_pairs": [
+          1,
+          3,
+          4
+        ],
+        "median_first_visible_ms": 1134.56,
+        "below_500": 0
+      },
+      "trial": {
+        "trials": [
+          {
+            "onset_shown_frame": 6,
+            "onset_to_window_ms": 810.49,
+            "clear_shown_frame": 12,
+            "clear_to_window_ms": 604.93,
+            "later_failed_registrations": 0,
+            "full_paint_ms": 3305.86,
+            "gpu_icon_calls": 8
+          },
+          {
+            "onset_shown_frame": 6,
+            "onset_to_window_ms": 957.37,
+            "clear_shown_frame": 12,
+            "clear_to_window_ms": 755.78,
+            "later_failed_registrations": 0,
+            "full_paint_ms": 2601.69,
+            "gpu_icon_calls": 8
+          },
+          {
+            "onset_shown_frame": 6,
+            "onset_to_window_ms": 851.81,
+            "clear_shown_frame": 12,
+            "clear_to_window_ms": 645.89,
+            "later_failed_registrations": 0,
+            "full_paint_ms": 3031.98,
+            "gpu_icon_calls": 7
+          },
+          {
+            "onset_shown_frame": 6,
+            "onset_to_window_ms": 1157.09,
+            "clear_shown_frame": 12,
+            "clear_to_window_ms": 957.05,
+            "later_failed_registrations": 0,
+            "full_paint_ms": 4575.15,
+            "gpu_icon_calls": 7
+          }
+        ],
+        "included_pairs": [
+          1,
+          3,
+          4
+        ],
+        "median_first_visible_ms": 851.81,
+        "below_500": 0
+      }
+    },
+    "animated_map_method": "另用稳定干员页切入地图的原有隔离动画回放，对照现有核显OCR与仅加图标核显筛选。按源录像首个可见转场与正确地图网格像素计时，并核对后续窗口记录。第2对期间单独进行了图标库字节核对，保留其原始结果，补跑第4对，主比较采用1、3、4对。",
+    "limits": [
+      "18对窗口结果来自两张同来源的多排页；不同页种、游戏动画及真人GPU负载不能据此外推。",
+      "首显计两张目标卡，全页另计；核显图标筛选对卡名OCR本身没有加速作用。"
+    ]
+  },
+  "limits": [
+    "正式实现中每种场景每组各三轮。隔离回放不代表游戏同跑。藏品首次可见验证两张正确卡，整页另计；地图从动画首个变化帧计至当前12个节点及位置可见。"
+  ],
+  "queue_comparison_receipt": "verification/maintenance/recognition-consumer-pacing-20261124/summary.json"
+}

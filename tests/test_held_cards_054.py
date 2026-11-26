@@ -172,7 +172,7 @@ class HeldCardContractTests(unittest.TestCase):
         items = {"a": {"name": "同名藏品", "usage": "攻击力+10%"},
                  "b": {"name": "同名藏品", "usage": "攻击力+10%"}}
         texts = [text("同名藏品", .2, .2), text("攻击力+10%", .2, .25)]
-        with patch("rouge.held_cards._inventory", return_value=(items, {"同名藏品": ["a", "b"]})):
+        with patch("rouge.held_cards.held_item_index", return_value=(items, {"同名藏品": ["a", "b"]})):
             self.assertEqual(read_held_cards(texts, text("收起", .1, .92)), [{
                 "id": None, "candidates": ["a", "b"], "confirmed": False,
                 "source": "held_name_and_usage", "title": "同名藏品"}])

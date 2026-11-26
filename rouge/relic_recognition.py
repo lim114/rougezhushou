@@ -327,7 +327,7 @@ class BarProjection:
         return possible
 
 
-def match_held_icons(image,anchor,count,*,cache=None):
+def match_held_icons(image,anchor,count,*,cache=None,gpu_screen=False):
     h,w=image.shape[:2];x,y=center(anchor)
     ux,uy=units(image,anchor,38.3 if anchor['text']=='收藏品' else 34.2)
     if count==0:count=None
@@ -339,7 +339,13 @@ def match_held_icons(image,anchor,count,*,cache=None):
     virtual_h=h*uy;ratio=min(1,900/virtual_h)
     roi=cv2.resize(roi,None,fx=ratio,fy=ratio)
     vh=round(virtual_h*ratio);vw=round(w*ux*ratio)
-    compute=lambda:_match_bar(roi,vh,vw,0,0)
+    def compute():
+        if gpu_screen:
+            import sys
+            if sys.platform == 'win32':
+                from .held_icon_gpu import current_screen
+                return _match_bar(roi,vh,vw,0,0,screen=current_screen())
+        return _match_bar(roi,vh,vw,0,0)
     found=cache.call(roi,('held_bar',vh,vw),compute) if cache else compute()
     for record in found:
         record['center']=[(x0+record['center'][0]*vw/ratio)/w,(y0+record['center'][1]*vh/ratio)/h]
@@ -448,7 +454,7 @@ def _coarse_matches(roi, references):
                 del rows
 
 
-def _match_bar(roi,h,w,x0,y0):
+def _match_bar(roi,h,w,x0,y0,*,screen=None):
     if not np.any(roi):return []
     found=[];near_misses=[];coarse_hits=[]
     rx=max(1,round(.025*w));ry=max(1,round(.04*h))
@@ -465,7 +471,11 @@ def _match_bar(roi,h,w,x0,y0):
                 if refine:coarse_hits.append((record,max(tw,th)))
             else:near_misses.append((record,max(tw,th)))
             differences[max(0,py-ry):py+ry+1,max(0,px-rx):px+rx+1]=10
-    for rid,tw,th,differences in _coarse_matches(roi,prepared_templates(h)):
+    references = prepared_templates(h)
+    if screen is not None:
+        indices = screen.select(roi, ('coarse', h), references)
+        references = [references[i] for i in indices]
+    for rid,tw,th,differences in _coarse_matches(roi,references):
         # Keep original OpenCV scores/locations for every plausible reference.
         # Screening can never supply a confirmed identity or an ambiguity score.
         collect(differences,rid,tw,th,refine=True)
@@ -483,7 +493,17 @@ def _match_bar(roi,h,w,x0,y0):
         for hit,hit_size in coarse_hits:
             if abs(hit['center'][0]-record['center'][0])<.025:
                 refine_sizes.update((hit['id'],s) for s in range(max(1,hit_size-radius),hit_size+radius+1) if s not in coarse_sizes)
-    for value in _refined_matches(roi,sorted(refine_sizes)):
+    ordered = sorted(refine_sizes)
+    if screen is not None and ordered:
+        seeds, rows = [], []
+        for rid, size in ordered:
+            refined = _refined_template(rid, size)
+            if refined is not None:
+                seeds.append((rid, size))
+                rows.append((rid, *refined))
+        indices = screen.select(roi, ('refined', tuple(seeds)), rows)
+        ordered = [seeds[i] for i in indices]
+    for value in _refined_matches(roi,ordered):
         if value is None:continue
         rid,tw,th,differences=value
         collect(differences,rid,tw,th)
